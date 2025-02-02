@@ -179,13 +179,14 @@
             </div>
             <ul class="nav-list">
                 <li class="nav-item">
-                    <a href="pages/intro.html" class="nav-link" data-page="intro">Introduction</a>
+                    <!-- Remove the pages/ prefix from href -->
+                    <a href="#intro" class="nav-link" data-page="intro">Introduction</a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/goroutines.html" class="nav-link" data-page="goroutines">Goroutines</a>
+                    <a href="#goroutines" class="nav-link" data-page="goroutines">Goroutines</a>
                 </li>
                 <li class="nav-item">
-                    <a href="pages/channels.html" class="nav-link" data-page="channels">Channels</a>
+                    <a href="#channels" class="nav-link" data-page="channels">Channels</a>
                 </li>
             </ul>
         </nav>
@@ -206,7 +207,24 @@
         async function loadContent(page) {
             try {
                 contentContainer.innerHTML = '<div class="loading">Loading...</div>';
-                const response = await fetch(`pages/${page}.html`);
+                
+                // Get the repository name from the URL path
+                const pathSegments = window.location.pathname.split('/');
+                const repoName = pathSegments[1]; // This will be 'go-concurrency-notes' or empty for root
+                
+                // Construct the base path
+                let basePath = '';
+                if (repoName && window.location.hostname.includes('github.io')) {
+                    basePath = `/${repoName}`;
+                }
+                
+                // Construct the full URL
+                const url = `${basePath}/pages/${page}.html`;
+                
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 const content = await response.text();
                 contentContainer.innerHTML = content;
                 
@@ -225,7 +243,13 @@
                 // Reinitialize Prism for new code blocks
                 Prism.highlightAll();
             } catch (error) {
-                contentContainer.innerHTML = '<p>Error loading content. Please try again.</p>';
+                console.error('Error loading content:', error);
+                contentContainer.innerHTML = `
+                    <div class="section">
+                        <h1>Error Loading Content</h1>
+                        <p>Unable to load the requested content. Please try again later.</p>
+                        <p>Error details: ${error.message}</p>
+                    </div>`;
             }
         }
 
@@ -254,7 +278,7 @@
             }
         });
 
-        // Load initial content
+        // Load initial content based on hash or default to intro
         const hash = window.location.hash.slice(1) || 'intro';
         loadContent(hash);
     </script>
