@@ -6,11 +6,12 @@
     <title>Go Concurrency Notes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+   
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+
     <style>
         :root {
             --primary-color: #00ADD8;
@@ -209,7 +210,7 @@
                 <p>Goroutines are lightweight threads managed by the Go runtime. They're incredibly efficient and easy to create.</p>
                 
                 <h2>Basic Example</h2>
-                <pre><code class="language-go">
+                <pre><code class="language-go line-numbers">
 func main() {
     go sayHello("World")
     time.Sleep(100 * time.Millisecond)
