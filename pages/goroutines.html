@@ -1,0 +1,20 @@
+<section id="goroutines" class="section">
+    <h1>Goroutines</h1>
+    <p>Goroutines are lightweight threads managed by the Go runtime. They're incredibly efficient and easy to create.</p>
+    
+    <h2>Basic Example</h2>
+    <pre><code class="language-go line-numbers">
+func main() {
+go sayHello("World")
+time.Sleep(100 * time.Millisecond)
+}
+
+func sayHello(name string) {
+fmt.Printf("Hello, %s!\n", name)
+}</code></pre>
+
+    <div class="navigation-buttons">
+        <button class="nav-button" onclick="navigate('prev')">Previous</button>
+        <button class="nav-button" onclick="navigate('next')">Next</button>
+    </div>
+</section>

@@ -176,123 +176,97 @@
 </head>
 <body>
     <div class="container">
-        <nav class="sidebar">
-            <div class="logo">
-                🔄 Go Concurrency Notes
-            </div>
-            <ul class="nav-list">
-                <li class="nav-item">
-                    <a href="#intro" class="nav-link active">Introduction</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#goroutines" class="nav-link">Goroutines</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#channels" class="nav-link">Channels</a>
-                </li>
-                <!-- Add more navigation items as needed -->
-            </ul>
-        </nav>
-
-        <main class="content">
-            <section id="intro" class="section active">
-                <h1>Introduction to Go Concurrency</h1>
-                <p>Welcome to my collection of notes on Go concurrency! This website documents my learning journey through Go's powerful concurrency features.</p>
-                <p>Go's approach to concurrency is unique and powerful, making it easier to write programs that get the most out of multicore and networked machines.</p>
-                
-                <div class="navigation-buttons">
-                    <button class="nav-button" onclick="navigate('prev')" disabled>Previous</button>
-                    <button class="nav-button" onclick="navigate('next')">Next</button>
-                </div>
-            </section>
-
-            <section id="goroutines" class="section">
-                <h1>Goroutines</h1>
-                <p>Goroutines are lightweight threads managed by the Go runtime. They're incredibly efficient and easy to create.</p>
-                
-                <h2>Basic Example</h2>
-                <pre><code class="language-go line-numbers">
-func main() {
-    go sayHello("World")
-    time.Sleep(100 * time.Millisecond)
-}
-
-func sayHello(name string) {
-    fmt.Printf("Hello, %s!\n", name)
-}</code></pre>
-
-                <div class="navigation-buttons">
-                    <button class="nav-button" onclick="navigate('prev')">Previous</button>
-                    <button class="nav-button" onclick="navigate('next')">Next</button>
-                </div>
-            </section>
-
-            <section id="channels" class="section">
-                <h1>Channels</h1>
-                <p>Channels are the pipes that connect concurrent goroutines. You can send values into channels from one goroutine and receive those values in another goroutine.</p>
-
-                <h2>Basic Channel Usage</h2>
-                <pre><code class="language-go">func main() {
-    messages := make(chan string)
-    
-    go func() {
-        messages <- "ping"
-    }()
-    
-    msg := <-messages
-    fmt.Println(msg)
-}</code></pre>
-
-                <div class="navigation-buttons">
-                    <button class="nav-button" onclick="navigate('prev')">Previous</button>
-                    <button class="nav-button" onclick="navigate('next')" disabled>Next</button>
-                </div>
-            </section>
-        </main>
+       
     </div>
 
     <script>
-        // Handle navigation
-        const sections = document.querySelectorAll('.section');
-        const navLinks = document.querySelectorAll('.nav-link');
+        // Wait for Prism to load
+        window.addEventListener('load', () => {
+            const contentContainer = document.getElementById('content-container');
+            const navLinks = document.querySelectorAll('.nav-link');
+            let currentPage = 'intro';
+            const pages = ['intro', 'goroutines', 'channels'];
 
-        function showSection(id) {
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-            });
+            async function loadContent(page) {
+                try {
+                    contentContainer.innerHTML = '<div class="loading">Loading...</div>';
+                    
+                    // Get the repository name from the URL path
+                    const pathSegments = window.location.pathname.split('/');
+                    const repoName = pathSegments[1]; // This will be 'go-concurrency-notes' or empty for root
+                    
+                    // Construct the base path
+                    let basePath = '';
+                    if (repoName && window.location.hostname.includes('github.io')) {
+                        basePath = `/${repoName}`;
+                    }
+                    
+                    // Construct the full URL
+                    const url = `${basePath}/pages/${page}.html`;
+                    
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const content = await response.text();
+                    contentContainer.innerHTML = content;
+                    
+                    // Update active state
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.dataset.page === page) {
+                            link.classList.add('active');
+                        }
+                    });
 
-            const section = document.getElementById(id);
-            const link = document.querySelector(`a[href="#${id}"]`);
-            
-            section.classList.add('active');
-            link.classList.add('active');
-        }
-
-        navLinks.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const id = e.target.getAttribute('href').slice(1);
-                showSection(id);
-            });
-        });
-
-        function navigate(direction) {
-            const currentSection = document.querySelector('.section.active');
-            const sections = Array.from(document.querySelectorAll('.section'));
-            const currentIndex = sections.indexOf(currentSection);
-            
-            if (direction === 'next' && currentIndex < sections.length - 1) {
-                showSection(sections[currentIndex + 1].id);
-            } else if (direction === 'prev' && currentIndex > 0) {
-                showSection(sections[currentIndex - 1].id);
+                    // Update URL without page reload
+                    history.pushState({page}, '', `#${page}`);
+                    currentPage = page;
+                    
+                    // Check if Prism is loaded before calling
+                    if (typeof Prism !== 'undefined') {
+                        Prism.highlightAll();
+                    }
+                } catch (error) {
+                    console.error('Error loading content:', error);
+                    contentContainer.innerHTML = `
+                        <div class="section">
+                            <h1>Error Loading Content</h1>
+                            <p>Unable to load the requested content. Please try again later.</p>
+                            <p>Error details: ${error.message}</p>
+                        </div>`;
+                }
             }
-        }
 
-        // Initialize Prism.js
-        Prism.highlightAll();
+            function navigate(direction) {
+                const currentIndex = pages.indexOf(currentPage);
+                if (direction === 'next' && currentIndex < pages.length - 1) {
+                    loadContent(pages[currentIndex + 1]);
+                } else if (direction === 'prev' && currentIndex > 0) {
+                    loadContent(pages[currentIndex - 1]);
+                }
+            }
+
+            // Handle navigation clicks
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const page = e.target.dataset.page;
+                    loadContent(page);
+                });
+            });
+
+            // Handle browser back/forward buttons
+            window.addEventListener('popstate', (event) => {
+                if (event.state && event.state.page) {
+                    loadContent(event.state.page);
+                }
+            });
+
+            // Load initial content based on hash or default to intro
+            const hash = window.location.hash.slice(1) || 'intro';
+            loadContent(hash);
+        });
     </script>
 </body>
 </html>
