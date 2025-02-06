@@ -208,7 +208,7 @@
             const contentContainer = document.getElementById('content-container');
             const navLinks = document.querySelectorAll('.nav-link');
 
-            async function loadContent(page) {
+            window.loadContent = async function (page) {
                 try {
                     contentContainer.innerHTML = '<div class="loading">Loading...</div>';
                     
