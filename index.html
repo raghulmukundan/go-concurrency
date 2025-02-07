@@ -315,6 +315,21 @@
             loadContent(pages[currentIndex - 1]);
         }
     }
+
+    // --- Expand/Collapse Navigation Sections ---
+    const sectionHeaders = document.querySelectorAll(".section-header");
+    sectionHeaders.forEach(header => {
+      header.addEventListener("click", () => {
+        const section = header.parentElement;
+        // Toggle the clicked section; collapse others
+        if (section.classList.contains("active")) {
+          section.classList.remove("active");
+        } else {
+          document.querySelectorAll(".nav-section").forEach(sec => sec.classList.remove("active"));
+          section.classList.add("active");
+        }
+      });
+    });
 </script>
 </body>
 </html>
