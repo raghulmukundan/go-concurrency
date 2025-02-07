@@ -1,296 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Go Concurrency Notes</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css">
-   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Go Concurrency Notes</title>
+  <!-- Prism CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
-    <style>
-        :root {
-            --primary-color: #00ADD8;
-            --bg-color: #0f172a;
-            --text-color: #e2e8f0;
-            --nav-bg: #1e293b;
-            --code-bg: #1a1a1a;
-        }
+  <style>
+    :root {
+      --primary-color: #00ADD8;
+      --bg-color: #0f172a;
+      --text-color: #e2e8f0;
+      --nav-bg: #1e293b;
+      --code-bg: #1a1a1a;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background: var(--bg-color);
-        }
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.6;
+      color: var(--text-color);
+      background: var(--bg-color);
+    }
 
-        .container {
-            display: flex;
-            min-height: 100vh;
-        }
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
 
-        .sidebar {
-            width: 300px;
-            background: var(--nav-bg);
-            padding: 2rem;
-            position: fixed;
-            height: 100vh;
-            overflow-y: auto;
-        }
+    .sidebar {
+      width: 300px;
+      background: var(--nav-bg);
+      padding: 2rem;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+    }
 
-        .content {
-            margin-left: 300px;
-            padding: 2rem;
-            flex-grow: 1;
-            max-width: 900px;
-        }
+    .content {
+      margin-left: 300px;
+      padding: 2rem;
+      flex-grow: 1;
+      max-width: 900px;
+    }
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: var(--primary-color);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
 
-        .nav-list {
-            list-style: none;
-        }
+    /* Navigation Styles */
+    .nav-list {
+      list-style: none;
+    }
 
-        .nav-item {
-            margin-bottom: 0.5rem;
-        }
+    /* Each section container */
+    .nav-section {
+      margin-bottom: 1rem;
+    }
 
-        .nav-link {
-            color: var(--text-color);
-            text-decoration: none;
-            padding: 0.5rem;
-            border-radius: 0.375rem;
-            display: block;
-            transition: background-color 0.2s;
-        }
+    /* Section header (always visible) */
+    .nav-section .section-header {
+      cursor: pointer;
+      padding: 0.5rem;
+      border-radius: 0.375rem;
+      transition: background-color 0.2s;
+      color: var(--text-color);
+      font-weight: bold;
+    }
 
-        .nav-link:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
+    .nav-section .section-header:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
 
-        .nav-link.active {
-            background: var(--primary-color);
-            color: white;
-        }
+    /* Topic list within a section */
+    .nav-section .section-topics {
+      list-style: none;
+      padding-left: 1rem;
+      margin-top: 0.5rem;
+      display: none; /* Hidden by default */
+    }
 
-        .section {
-            margin-bottom: 4rem;
-            display: block;
-        }
+    /* When a section is active (expanded) */
+    .nav-section.active .section-topics {
+      display: block;
+    }
 
-        .section.active {
-            display: block;
-        }
+    .nav-item {
+      margin-bottom: 0.5rem;
+    }
 
-        h1, h2, h3 {
-            color: var(--primary-color);
-            margin-bottom: 1rem;
-        }
+    .nav-link {
+      color: var(--text-color);
+      text-decoration: none;
+      padding: 0.5rem;
+      border-radius: 0.375rem;
+      display: block;
+      transition: background-color 0.2s;
+    }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-        }
+    .nav-link:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
 
-        h2 {
-            font-size: 2rem;
-            margin-top: 2rem;
-        }
+    .nav-link.active {
+      background: var(--primary-color);
+      color: white;
+    }
 
-        p {
-            margin-bottom: 1rem;
-        }
-
-        pre {
-            background: var(--code-bg);
-            padding: 1rem;
-            border-radius: 0.5rem;
-            overflow-x: auto;
-            margin: 1rem 0;
-        }
-
-        code {
-            font-family: 'Fira Code', monospace;
-        }
-
-        .navigation-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-button {
-            padding: 0.5rem 1rem;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 0.375rem;
-            cursor: pointer;
-            transition: opacity 0.2s;
-        }
-
-        .nav-button:hover {
-            opacity: 0.9;
-        }
-
-        .nav-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-            }
-            .sidebar {
-                width: 100%;
-                height: auto;
-                position: static;
-            }
-            .content {
-                margin-left: 0;
-            }
-        }
-    </style>
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+      }
+      .content {
+        margin-left: 0;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <nav class="sidebar">
-            <div class="logo">
-                🔄 Go Concurrency
-            </div>
-            <ul class="nav-list">
-                <li class="nav-item">
-                    <a href="#intro" class="nav-link active" data-page="intro">Introduction</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#goroutines" class="nav-link" data-page="goroutines">Goroutines</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#channels" class="nav-link">Channels</a>
-                </li>
-                <!-- Add more navigation items as needed -->
-            </ul>
-        </nav>
+  <div class="container">
+    <nav class="sidebar">
+      <div class="logo">🔄 Go Concurrency</div>
+      <ul class="nav-list">
+        <!-- Introduction Section -->
+        <li class="nav-section">
+          <div class="section-header">Fundamentals</div>
+          <ul class="section-topics">
+            <li class="nav-item">
+              <a href="#intro" class="nav-link active" data-page="intro">
+                Introduction
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#why-go-built-for-concurrency" class="nav-link" data-page="why-go-built-for-concurrency">
+                Why is Go Built for Concurrency?
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- Goroutines Section -->
+        <li class="nav-section">
+          <div class="section-header">Goroutines</div>
+          <ul class="section-topics">
+            <li class="nav-item">
+              <a href="#basic-goroutines" class="nav-link" data-page="goroutines">
+                Basic Goroutines
+              </a>
+            </li>
+            <!-- Add more goroutines topics as needed -->
+          </ul>
+        </li>
+        <!-- Channels Section -->
+        <li class="nav-section">
+          <div class="section-header">Channels</div>
+          <ul class="section-topics">
+            <li class="nav-item">
+              <a href="#channel-basics" class="nav-link" data-page="channel-basics">
+                Channel Basics
+              </a>
+            </li>
+            <!-- Add more channels topics as needed -->
+          </ul>
+        </li>
+        <!-- Add more sections if needed -->
+      </ul>
+    </nav>
 
-        <main class="content">
-            <div id="content-container">
-                <!-- Content will be loaded here dynamically -->
-            </div>
-        </main>
-    </div>
+    <main class="content">
+      <div id="content-container">
+        <!-- Content will be loaded here dynamically -->
+      </div>
+    </main>
+  </div>
 
-    <script>
-        const pages = ['intro', 'goroutines', 'channels'];
-        // Wait for Prism to load
-        window.addEventListener('load', () => {
-            const contentContainer = document.getElementById('content-container');
-            const navLinks = document.querySelectorAll('.nav-link');
+  <!-- Prism Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-go.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/toolbar/prism-toolbar.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
 
-            window.loadContent = async function (page) {
-                try {
-                    contentContainer.innerHTML = '<div class="loading">Loading...</div>';
-                    
-                    // Get the repository name from the URL path
-                    const pathSegments = window.location.pathname.split('/');
-                    const repoName = pathSegments[1]; // This will be 'go-concurrency-notes' or empty for root
-                    
-                    // Construct the base path
-                    let basePath = '';
-                    if (repoName && window.location.hostname.includes('github.io')) {
-                        basePath = `/${repoName}`;
-                    }
-                    
-                    // Construct the full URL
-                    const url = `${basePath}/pages/${page}.html`;
-                    
-                    const response = await fetch(url);
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    const content = await response.text();
-                    contentContainer.innerHTML = content;
-                    
-                    // Update active state
-                    navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.dataset.page === page) {
-                            link.classList.add('active');
-                        }
-                    });
+  <script>
+    // --- Content Loading Logic ---
+    const contentContainer = document.getElementById('content-container');
+    const navLinks = document.querySelectorAll('.nav-link');
 
-                    // Update URL without page reload
-                    history.pushState({page}, '', `#${page}`);
-                    currentPage = page;
-                    
-                    // Check if Prism is loaded before calling
-                    if (typeof Prism !== 'undefined') {
-                        Prism.highlightAll();
-                    }
-                } catch (error) {
-                    console.error('Error loading content:', error);
-                    contentContainer.innerHTML = `
-                        <div class="section">
-                            <h1>Error Loading Content</h1>
-                            <p>Unable to load the requested content. Please try again later.</p>
-                            <p>Error details: ${error.message}</p>
-                        </div>`;
-                }
-            }
+    window.loadContent = async function(page) {
+      try {
+        contentContainer.innerHTML = '<div class="loading">Loading...</div>';
+        // Construct the base path
+        const pathSegments = window.location.pathname.split('/');
+        const repoName = pathSegments[1]; // For GitHub Pages repos
+        let basePath = '';
+        if (repoName && window.location.hostname.includes('github.io')) {
+          basePath = `/${repoName}`;
+        }
+        const url = `${basePath}/pages/${page}.html`;
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const content = await response.text();
+        contentContainer.innerHTML = content;
 
-            // Handle navigation clicks
-            navLinks.forEach(link => {
-                link.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const page = e.target.dataset.page;
-                    loadContent(page);
-                });
-            });
-
-            // Handle browser back/forward buttons
-            window.addEventListener('popstate', (event) => {
-                if (event.state && event.state.page) {
-                    loadContent(event.state.page);
-                }
-            });
-
-            // Load initial content based on hash or default to intro
-            const hash = window.location.hash.slice(1) || 'intro';
-            loadContent(hash);
+        // Update active nav-link styles
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.dataset.page === page) {
+            link.classList.add('active');
+          }
         });
 
-        function navigate(direction) {
-            const navLinks = document.querySelectorAll('.nav-link');
-            const pages = Array.from(navLinks).map(link => link.dataset.page);
-            const currentPage = window.location.hash.slice(1) || pages[0];
-            const currentIndex = pages.indexOf(currentPage);
-            if (direction === 'next' && currentIndex < pages.length - 1) {
-                loadContent(pages[currentIndex + 1]);
-            } else if (direction === 'prev' && currentIndex > 0) {
-                loadContent(pages[currentIndex - 1]);
-            }
-            }
-    </script>
+        // Update URL without reloading the page
+        history.pushState({ page }, '', `#${page}`);
+
+        // Highlight code (if Prism is loaded)
+        if (typeof Prism !== "undefined") {
+          Prism.highlightAll();
+        }
+      } catch (error) {
+        console.error("Error loading content:", error);
+        contentContainer.innerHTML = `
+          <div class="section">
+            <h1>Error Loading Content</h1>
+            <p>Unable to load the requested content. Please try again later.</p>
+            <p>Error details: ${error.message}</p>
+          </div>`;
+      }
+    }
+
+    // Handle click events for topic links
+    navLinks.forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        const page = e.target.dataset.page;
+        loadContent(page);
+      });
+    });
+
+    // --- Expand/Collapse Navigation Sections ---
+    const sectionHeaders = document.querySelectorAll(".section-header");
+    sectionHeaders.forEach(header => {
+      header.addEventListener("click", () => {
+        const section = header.parentElement;
+        // Toggle the clicked section; collapse others
+        if (section.classList.contains("active")) {
+          section.classList.remove("active");
+        } else {
+          document.querySelectorAll(".nav-section").forEach(sec => sec.classList.remove("active"));
+          section.classList.add("active");
+        }
+      });
+    });
+
+    // Handle browser back/forward buttons
+    window.addEventListener("popstate", event => {
+      if (event.state && event.state.page) {
+        loadContent(event.state.page);
+      }
+    });
+
+    // Load initial content based on URL hash or default to a page (e.g. first topic)
+    window.addEventListener("load", () => {
+      const initialPage = window.location.hash.slice(1) || "concurrency-vs-parallelism";
+      loadContent(initialPage);
+    });
+  </script>
 </body>
 </html>
