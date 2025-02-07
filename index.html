@@ -227,90 +227,94 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/copy-to-clipboard/prism-copy-to-clipboard.min.js"></script>
 
   <script>
-    // --- Content Loading Logic ---
-    const contentContainer = document.getElementById('content-container');
-    const navLinks = document.querySelectorAll('.nav-link');
+    // Wait for Prism to load
+    window.addEventListener('load', () => {
+        const contentContainer = document.getElementById('content-container');
+        const navLinks = document.querySelectorAll('.nav-link');
 
-    window.loadContent = async function(page) {
-      try {
-        contentContainer.innerHTML = '<div class="loading">Loading...</div>';
-        // Construct the base path
-        const pathSegments = window.location.pathname.split('/');
-        const repoName = pathSegments[1]; // For GitHub Pages repos
-        let basePath = '';
-        if (repoName && window.location.hostname.includes('github.io')) {
-          basePath = `/${repoName}`;
-        }
-        const url = `${basePath}/pages/${page}.html`;
-        const response = await fetch(url);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const content = await response.text();
-        contentContainer.innerHTML = content;
+        window.loadContent = async function (page) {
+            try {
+                contentContainer.innerHTML = '<div class="loading">Loading...</div>';
+                
+                // Get the repository name from the URL path
+                const pathSegments = window.location.pathname.split('/');
+                const repoName = pathSegments[1]; // This will be 'go-concurrency-notes' or empty for root
+                
+                // Construct the base path
+                let basePath = '';
+                if (repoName && window.location.hostname.includes('github.io')) {
+                    basePath = `/${repoName}`;
+                }
+                
+                // Construct the full URL
+                const url = `${basePath}/pages/${page}.html`;
+                
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const content = await response.text();
+                contentContainer.innerHTML = content;
+                
+                // Update active state
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.dataset.page === page) {
+                        link.classList.add('active');
+                    }
+                });
 
-        // Update active nav-link styles
+                // Update URL without page reload
+                history.pushState({page}, '', `#${page}`);
+                currentPage = page;
+                
+                // Check if Prism is loaded before calling
+                if (typeof Prism !== 'undefined') {
+                    Prism.highlightAll();
+                }
+            } catch (error) {
+                console.error('Error loading content:', error);
+                contentContainer.innerHTML = `
+                    <div class="section">
+                        <h1>Error Loading Content</h1>
+                        <p>Unable to load the requested content. Please try again later.</p>
+                        <p>Error details: ${error.message}</p>
+                    </div>`;
+            }
+        }
+
+        // Handle navigation clicks
         navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.dataset.page === page) {
-            link.classList.add('active');
-          }
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const page = e.target.dataset.page;
+                loadContent(page);
+            });
         });
 
-        // Update URL without reloading the page
-        history.pushState({ page }, '', `#${page}`);
+        // Handle browser back/forward buttons
+        window.addEventListener('popstate', (event) => {
+            if (event.state && event.state.page) {
+                loadContent(event.state.page);
+            }
+        });
 
-        // Highlight code (if Prism is loaded)
-        if (typeof Prism !== "undefined") {
-          Prism.highlightAll();
+        // Load initial content based on hash or default to intro
+        const hash = window.location.hash.slice(1) || 'intro';
+        loadContent(hash);
+    });
+
+    function navigate(direction) {
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = Array.from(navLinks).map(link => link.dataset.page);
+        const currentPage = window.location.hash.slice(1) || pages[0];
+        const currentIndex = pages.indexOf(currentPage);
+        if (direction === 'next' && currentIndex < pages.length - 1) {
+            loadContent(pages[currentIndex + 1]);
+        } else if (direction === 'prev' && currentIndex > 0) {
+            loadContent(pages[currentIndex - 1]);
         }
-      } catch (error) {
-        console.error("Error loading content:", error);
-        contentContainer.innerHTML = `
-          <div class="section">
-            <h1>Error Loading Content</h1>
-            <p>Unable to load the requested content. Please try again later.</p>
-            <p>Error details: ${error.message}</p>
-          </div>`;
-      }
     }
-
-    // Handle click events for topic links
-    navLinks.forEach(link => {
-      link.addEventListener("click", e => {
-        e.preventDefault();
-        const page = e.target.dataset.page;
-        loadContent(page);
-      });
-    });
-
-    // --- Expand/Collapse Navigation Sections ---
-    const sectionHeaders = document.querySelectorAll(".section-header");
-    sectionHeaders.forEach(header => {
-      header.addEventListener("click", () => {
-        const section = header.parentElement;
-        // Toggle the clicked section; collapse others
-        if (section.classList.contains("active")) {
-          section.classList.remove("active");
-        } else {
-          document.querySelectorAll(".nav-section").forEach(sec => sec.classList.remove("active"));
-          section.classList.add("active");
-        }
-      });
-    });
-
-    // Handle browser back/forward buttons
-    window.addEventListener("popstate", event => {
-      if (event.state && event.state.page) {
-        loadContent(event.state.page);
-      }
-    });
-
-    // Load initial content based on URL hash or default to a page (e.g. first topic)
-    window.addEventListener("load", () => {
-      const initialPage = window.location.hash.slice(1) || "concurrency-vs-parallelism";
-      loadContent(initialPage);
-    });
-  </script>
+</script>
 </body>
 </html>
