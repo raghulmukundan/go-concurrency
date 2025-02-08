@@ -278,6 +278,7 @@
             // Update active state
             navLinks.forEach((link) => {
               link.classList.remove("active");
+              link.closest(".nav-section").classList.remove("active");
               if (link.dataset.page === page) {
                 link.classList.add("active");
                 link.closest(".nav-section").classList.add("active");
