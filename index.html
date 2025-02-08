@@ -279,6 +279,7 @@
             const content = await response.text();
             contentContainer.innerHTML = content;
 
+            let currentSelectedLink
             // Update active state
             navLinks.forEach((link) => {
               link.classList.remove("active");
@@ -286,9 +287,7 @@
               navSection.classList.remove("active");
               navSection.children[0].classList.remove("active");
               if (link.dataset.page === page) {
-                link.classList.add("active");
-                navSection.classList.add("active");
-                navSection.children[0].classList.add("active");
+                currentSelectedLink = link
               }
             });
 
@@ -300,9 +299,10 @@
             if (typeof Prism !== "undefined") {
               Prism.highlightAll();
             }
-
-            const sectionTitles =
-            document.querySelectorAll(".section-header");
+            const currentNavSection =  currentSelectedLink.closest(".nav-section")
+            currentNavSection.classList.add("active");
+            currentNavSection.children[0].classList.add("active");
+            currentSelectedLink.classList.add("active");
           } catch (error) {
             console.error("Error loading content:", error);
             contentContainer.innerHTML = `
