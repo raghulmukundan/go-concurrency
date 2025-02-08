@@ -282,12 +282,13 @@
             // Update active state
             navLinks.forEach((link) => {
               link.classList.remove("active");
-              link.closest(".nav-section").classList.remove("active");
-              link.closest(".section-header").classList.remove("active");
+              navSection = link.closest(".nav-section")
+              navSection.classList.remove("active");
+              navSection.children[0].classList.remove("active");
               if (link.dataset.page === page) {
                 link.classList.add("active");
-                link.closest(".nav-section").classList.add("active");
-                link.closest(".section-header").classList.add("active");
+                navSection.classList.add("active");
+                navSection.children[0].classList.add("active");
               }
             });
 
