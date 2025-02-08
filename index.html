@@ -171,6 +171,10 @@
         padding-top: 1rem;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
+
+      p {
+        margin-top: 1em;
+      }
     </style>
   </head>
   <body>
@@ -299,6 +303,7 @@
             if (typeof Prism !== "undefined") {
               Prism.highlightAll();
             }
+
             const currentNavSection =  currentSelectedLink.closest(".nav-section")
             currentNavSection.classList.add("active");
             currentNavSection.children[0].classList.add("active");
