@@ -92,8 +92,8 @@
         background: rgba(255, 255, 255, 0.1);
       }
 
-       .section-header.active {
-        background: #0096A8;
+      .section-header.active {
+        background: #0096a8;
       }
 
       /* Topic list within a section */
@@ -173,7 +173,10 @@
       }
 
       p {
-        margin-top: 1em;
+        margin: 1.5em 0;
+        line-height: 1.6;
+        font-size: 1.1rem;
+        color: rgba(255, 255, 255, 0.9);
       }
     </style>
   </head>
@@ -192,7 +195,11 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#ConcurrencyVsParallelism" class="nav-link active" data-page="concurrency-vs-parallelism">
+                <a
+                  href="#ConcurrencyVsParallelism"
+                  class="nav-link active"
+                  data-page="concurrency-vs-parallelism"
+                >
                   Concurrency Vs Parallelism
                 </a>
               </li>
@@ -288,15 +295,15 @@
             const content = await response.text();
             contentContainer.innerHTML = content;
 
-            let currentSelectedLink
+            let currentSelectedLink;
             // Update active state
             navLinks.forEach((link) => {
               link.classList.remove("active");
-              navSection = link.closest(".nav-section")
+              navSection = link.closest(".nav-section");
               navSection.classList.remove("active");
               navSection.children[0].classList.remove("active");
               if (link.dataset.page === page) {
-                currentSelectedLink = link
+                currentSelectedLink = link;
               }
             });
 
@@ -309,7 +316,8 @@
               Prism.highlightAll();
             }
 
-            const currentNavSection =  currentSelectedLink.closest(".nav-section")
+            const currentNavSection =
+              currentSelectedLink.closest(".nav-section");
             currentNavSection.classList.add("active");
             currentNavSection.children[0].classList.add("active");
             currentSelectedLink.classList.add("active");
