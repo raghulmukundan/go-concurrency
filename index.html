@@ -92,6 +92,10 @@
         background: rgba(255, 255, 255, 0.1);
       }
 
+       .section-header.active {
+        background: #0096A8;
+      }
+
       /* Topic list within a section */
       .nav-section .section-topics {
         list-style: none;
@@ -279,9 +283,11 @@
             navLinks.forEach((link) => {
               link.classList.remove("active");
               link.closest(".nav-section").classList.remove("active");
+              link.closest(".section-header").classList.remove("active");
               if (link.dataset.page === page) {
                 link.classList.add("active");
                 link.closest(".nav-section").classList.add("active");
+                link.closest(".section-header").classList.add("active");
               }
             });
 
