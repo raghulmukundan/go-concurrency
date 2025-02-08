@@ -272,6 +272,22 @@
                 if (typeof Prism !== 'undefined') {
                     Prism.highlightAll();
                 }
+
+                const sectionTitles = contentContainer.querySelectorAll('.section-title');
+      sectionTitles.forEach(title => {
+        title.addEventListener('click', () => {
+          // Remove highlight from all sections first
+          const sections = contentContainer.querySelectorAll('.section');
+          sections.forEach(section => section.classList.remove('highlight'));
+
+          // Add the highlight class to the parent section of the clicked title.
+          // Using closest() is safe in case the title is nested inside the section.
+          const section = title.closest('.section');
+          if (section) {
+            section.classList.add('highlight');
+          }
+        });
+      });
             } catch (error) {
                 console.error('Error loading content:', error);
                 contentContainer.innerHTML = `
