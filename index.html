@@ -184,9 +184,51 @@
         color: rgba(255, 255, 255, 0.9);
       }
 
-      h1 h2{
+      h1 h2 {
         font-weight: 600;
-        color: goldenrod
+        color: goldenrod;
+      }
+
+      /* Container styles */
+      .characteristics {
+        padding: 1.5rem 0;
+      }
+
+      /* Heading style */
+      .characteristics h2 {
+        font-size: 1.75rem;
+        margin-bottom: 1.5rem;
+        font-weight: 600;
+      }
+
+      /* List container */
+      ul {
+        list-style: none; /* Remove default bullets */
+        padding-left: 0;
+      }
+
+      /* List items */
+      li {
+        position: relative;
+        padding-left: 1.5rem;
+        margin-bottom: 1.25rem;
+        line-height: 1.6;
+      }
+
+      /* Custom bullet points using pseudo-element */
+      li::before {
+        content: "•";
+        color: #00b8d4; /* Your cyan accent color */
+        position: absolute;
+        left: 0;
+        font-size: 1.2em;
+      }
+
+      /* Bold text for term definitions */
+      li strong {
+        color: #00b8d4;
+        font-weight: 500;
+        margin-right: 0.5rem;
       }
     </style>
   </head>
