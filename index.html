@@ -201,7 +201,7 @@
       h1 {
         font-size: 2.5rem;
         font-weight: 600;
-        color: #F5F3FF;
+        color: #f5f3ff;
         margin-bottom: 1.5rem;
         line-height: 1.2;
       }
@@ -209,7 +209,7 @@
       h2 {
         font-size: 2rem;
         margin: 1rem 0 1rem 0;
-        color: #E9E5FF;
+        color: #e9e5ff;
         font-weight: 600;
       }
 
@@ -220,7 +220,7 @@
       }
 
       /* Key terms (like "Task Interleaving:") */
-     .characteristics .key-term {
+      .characteristics .key-term {
         color: #2de2e6; /* A slightly softer cyan that's easier on the eyes */
         font-weight: 500;
         font-size: 1.1rem;
@@ -231,7 +231,7 @@
         font-size: 1.2rem;
         margin-bottom: 1rem;
         font-weight: 600;
-        color: #E9E5FF;
+        color: #e9e5ff;
       }
 
       /* List container */
@@ -246,7 +246,6 @@
         padding-left: 1.7rem;
         margin: 0.8rem 0;
         line-height: 1.7;
-        
       }
 
       /* Custom bullet points using pseudo-element */
@@ -263,6 +262,44 @@
         color: #00b8d4;
         font-weight: 500;
         margin-right: 0.5rem;
+      }
+
+      .comparison-grid {
+        margin: 2rem 0;
+      }
+
+      .grid {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .aspect-card {
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 8px;
+        padding: 1.5rem;
+      }
+
+      .aspect-card h3 {
+        color: #00b8d4;
+        margin-bottom: 1rem;
+      }
+
+      .comparison {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+
+      .concurrency,
+      .parallelism {
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 6px;
+      }
+
+      .comparison h4 {
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 0.5rem;
       }
     </style>
   </head>
