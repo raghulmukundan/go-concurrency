@@ -172,8 +172,8 @@
           <div class="rightgrid">
             <h4>Parallelism</h4>
             <p>
-              Use when you have a computationally intensive task that can be divided into
-              smaller, independent parts.
+              Use when you have a computationally intensive task that can be
+              divided into smaller, independent parts.
             </p>
           </div>
         </div>
@@ -192,6 +192,35 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class="characteristics">
+    <h2>Concurrency and Parallelism in Go</h2>
+    <ul>
+      <li>
+        <span class="key-term">Concurrency:</span> Go uses goroutines and
+        channels to manage concurrent tasks.
+        <ul>
+          <li>
+            <p>
+              Example: A Go program can handle multiple HTTP requests
+              concurrently using goroutines.
+            </p>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <span class="key-term">Parallelism:</span> Go can execute goroutines in
+        parallel if multiple CPU cores are available.
+        <ul>
+          <li>
+            <p>
+              Example: A Go program can process a large dataset in parallel by
+              dividing the work across multiple goroutines.
+            </p>
+          </li>
+        </ul>
+      </li>
+    </ul>
   </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
