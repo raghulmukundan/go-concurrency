@@ -194,7 +194,7 @@
     </div>
   </div>
   <div class="characteristics">
-    <h2>Concurrency and Parallelism in Go</h2>
+    <h3>Concurrency and Parallelism in Go</h3>
     <ul>
       <li>
         <span class="key-term">Concurrency:</span> Go uses goroutines and
@@ -221,6 +221,55 @@
         </ul>
       </li>
     </ul>
+  </div>
+  <div class="summary-section">
+    <div class="summary-header">
+      <div class="summary-icon">
+        <!-- If using lucide icons -->
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+          ></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+      </div>
+      <h2 class="summary-title">Summary</h2>
+    </div>
+
+    <div class="summary-content">
+      <p>
+        Understanding the difference between concurrency and parallelism is
+        crucial for developing efficient programs. Here are the key takeaways:
+      </p>
+
+      <div class="key-point">
+        Concurrency focuses on managing multiple tasks by interleaving their
+        execution, making it ideal for handling multiple user requests or I/O
+        operations.
+      </div>
+
+      <div class="key-point">
+        Parallelism emphasizes simultaneous execution of tasks, best suited for
+        computationally intensive operations that can be divided across multiple
+        processors.
+      </div>
+
+      <div class="key-point">
+        While both approaches aim to improve performance, they achieve it
+        through different means: concurrency through better resource
+        utilization, and parallelism through simultaneous execution.
+      </div>
+    </div>
   </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
