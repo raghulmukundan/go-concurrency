@@ -489,7 +489,7 @@
 
               try {
                 // Fetch the code file
-                const fullCodePath = `${basePath}/code/${codePath}`;
+                const fullCodePath = `https://raw.githubusercontent.com/raghulmukundan/go-concurrency/refs/heads/main/code/${codePath}`;
                 console.log("Fetching code from:", fullCodePath);
                 const codeResponse = await fetch(fullCodePath);
                 if (!codeResponse.ok) {
