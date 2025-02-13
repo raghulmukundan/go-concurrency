@@ -468,6 +468,58 @@
             const content = await response.text();
             contentContainer.innerHTML = content;
 
+            // Now find all code sections in the loaded content
+            const codeSections =
+              contentContainer.querySelectorAll(".code-section");
+            // Process each code section
+            for (const section of codeSections) {
+              // Get the code file path from the data attribute
+              const codePath = section.dataset.codePath;
+
+              if (!codePath) {
+                console.warn(
+                  "Code section found without a code path:",
+                  section
+                );
+                continue;
+              }
+
+              try {
+                // Fetch the code file
+                const codeResponse = await fetch(codePath);
+                if (!codeResponse.ok) {
+                  throw new Error(`Failed to load code from ${codePath}`);
+                }
+
+                const code = await codeResponse.text();
+
+                // Create the code display elements
+                const pre = document.createElement("pre");
+                const codeElement = document.createElement("code");
+
+                // Determine language from file extension
+                const fileExtension = codePath.split(".").pop();
+                const languageClass = getLanguageClass(fileExtension);
+
+                // Set up the code element
+                codeElement.className = `language-${languageClass}`;
+                codeElement.textContent = code;
+
+                // Clear existing content and add the new code
+                section.innerHTML = ""; // Clear the section
+                pre.appendChild(codeElement);
+                section.appendChild(pre);
+
+                // Apply Prism highlighting
+                if (window.Prism) {
+                  Prism.highlightElement(codeElement);
+                }
+              } catch (error) {
+                console.error(`Error loading code for section:`, error);
+                section.innerHTML = `<div class="error-message">Failed to load code: ${error.message}</div>`;
+              }
+            }
+
             let currentSelectedLink;
             // Update active state
             navLinks.forEach((link) => {
