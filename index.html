@@ -486,6 +486,8 @@
 
               try {
                 // Fetch the code file
+                const fullCodePath = `${basePath}/code/${codePath}`;
+                console.log("Fetching code from:", fullCodePath);
                 const codeResponse = await fetch(codePath);
                 if (!codeResponse.ok) {
                   throw new Error(`Failed to load code from ${codePath}`);
