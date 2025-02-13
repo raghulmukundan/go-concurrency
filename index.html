@@ -471,9 +471,11 @@
             // Now find all code sections in the loaded content
             const codeSections =
               contentContainer.querySelectorAll(".code-section");
+            console.log("Code section:", codeSections);
             // Process each code section
             for (const section of codeSections) {
               // Get the code file path from the data attribute
+              console.log("section:", section);
               const codePath = section.dataset.codePath;
 
               if (!codePath) {
