@@ -476,7 +476,8 @@
             for (const section of codeSections) {
               // Get the code file path from the data attribute
               console.log("section:", section);
-              const codePath = section.dataset.codePath;
+              const codeContainer = section.querySelector(".code-container");
+              const codePath = codeContainer.dataset.codePath;
 
               if (!codePath) {
                 console.warn(
