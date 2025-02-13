@@ -491,9 +491,9 @@
                 // Fetch the code file
                 const fullCodePath = `${basePath}/code/${codePath}`;
                 console.log("Fetching code from:", fullCodePath);
-                const codeResponse = await fetch(codePath);
+                const codeResponse = await fetch(fullCodePath);
                 if (!codeResponse.ok) {
-                  throw new Error(`Failed to load code from ${codePath}`);
+                  throw new Error(`Failed to load code from ${fullCodePath}`);
                 }
 
                 const code = await codeResponse.text();
@@ -511,9 +511,9 @@
                 codeElement.textContent = code;
 
                 // Clear existing content and add the new code
-                section.innerHTML = ""; // Clear the section
+                codeContainer.innerHTML = ""; // Clear the section
                 pre.appendChild(codeElement);
-                section.appendChild(pre);
+                codeContainer.appendChild(pre);
 
                 // Apply Prism highlighting
                 if (window.Prism) {
