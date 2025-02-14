@@ -640,7 +640,6 @@
                 if (!codeResponse.ok) {
                   throw new Error(`Failed to load code from ${fullCodePath}`);
                 }
-
                 const code = await codeResponse.text();
 
                 // First, determine language from file extension
@@ -651,14 +650,15 @@
                 const codeToolbar = document.createElement("div");
                 codeToolbar.className = "code-toolbar";
 
+                // Create the pre and code elements
                 const pre = document.createElement("pre");
-                pre.className = "language-go line-numbers"; // Add language and line numbers
+                pre.className = "language-go line-numbers";
 
                 const codeElement = document.createElement("code");
                 codeElement.className = `language-${languageClass}`;
-                codeElement.textContent = code; // Set the code content
+                codeElement.textContent = code;
 
-                // Create toolbar
+                // Create toolbar for buttons
                 const toolbar = document.createElement("div");
                 toolbar.className = "toolbar";
 
@@ -670,26 +670,15 @@
                 expandButton.innerHTML = "<span>Expand</span>";
                 expandToolbarItem.appendChild(expandButton);
 
-                // Create copy button
-                const copyToolbarItem = document.createElement("div");
-                copyToolbarItem.className = "toolbar-item";
-                const copyButton = document.createElement("button");
-                copyButton.className = "copy-to-clipboard-button";
-                copyButton.type = "button";
-                copyButton.setAttribute("data-copy-state", "copy");
-                copyButton.innerHTML = "<span>Copy</span>";
-                copyToolbarItem.appendChild(copyButton);
-
-                // Add buttons to toolbar
+                // Add expand button to toolbar
                 toolbar.appendChild(expandToolbarItem);
-                toolbar.appendChild(copyToolbarItem);
 
-                // Assemble the structure in the correct order
-                pre.appendChild(codeElement); // First, put code inside pre
-                codeToolbar.appendChild(pre); // Then put pre inside toolbar
-                codeToolbar.appendChild(toolbar); // Then add the buttons toolbar
+                // Assemble the structure
+                pre.appendChild(codeElement);
+                codeToolbar.appendChild(pre);
+                codeToolbar.appendChild(toolbar);
 
-                // Create overlay (if it doesn't exist)
+                // Create and handle overlay for expanded view
                 let overlay = document.querySelector(".code-overlay");
                 if (!overlay) {
                   overlay = document.createElement("div");
@@ -707,7 +696,7 @@
                   document.body.style.overflow = isExpanded ? "hidden" : "";
                 });
 
-                // Add escape key handler
+                // Add escape key handler for expanded view
                 document.addEventListener("keydown", (e) => {
                   if (
                     e.key === "Escape" &&
@@ -731,10 +720,10 @@
                 });
 
                 // Clear container and add the new structure
-                codeContainer.innerHTML = ""; // Clear the section
+                codeContainer.innerHTML = "";
                 codeContainer.appendChild(codeToolbar);
 
-                // Apply Prism highlighting
+                // Apply Prism highlighting and plugins
                 if (window.Prism) {
                   Prism.highlightElement(codeElement);
                 }
