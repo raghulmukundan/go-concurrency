@@ -355,91 +355,108 @@
       /* Main container for code block */
       .code-toolbar {
         position: relative; /* This creates positioning context for absolute toolbar */
-        margin: 2rem 0;
         background: #1e2432;
         border-radius: 8px;
       }
 
+      /* Add these scrollbar styles to the previous CSS */
       .code-toolbar pre {
-        /* Set a max-height to trigger scrolling */
-        max-height: 400px; /* Adjust this value based on your needs */
+        /* Keep existing pre styles and add: */
+        max-height: 400px; /* Trigger scrollbar after this height */
         overflow-y: auto;
-
-        /* Enable smooth scrolling for better user experience */
         scroll-behavior: smooth;
 
-        /* Style the scrollbar for WebKit browsers (Chrome, Safari, etc.) */
+        /* Webkit scrollbar styling (Chrome, Safari, Edge) */
         &::-webkit-scrollbar {
-          width: 12px; /* Width of the scrollbar */
-          background-color: rgba(255, 255, 255, 0.05); /* Subtle background */
+          width: 10px;
+          height: 10px; /* For horizontal scrolling if needed */
         }
 
-        /* Style the scrollbar thumb (the draggable part) */
-        &::-webkit-scrollbar-thumb {
-          background: rgba(0, 184, 212, 0.3); /* Using your cyan accent color */
-          border-radius: 6px; /* Rounded corners */
-          border: 3px solid rgba(30, 36, 50, 0.8); /* Creates padding effect */
-
-          /* Add hover effect for better interactivity */
-          &:hover {
-            background: rgba(0, 184, 212, 0.4);
-          }
-
-          /* Style for active/clicking state */
-          &:active {
-            background: rgba(0, 184, 212, 0.5);
-          }
-        }
-
-        /* Style the scrollbar track */
         &::-webkit-scrollbar-track {
-          background: rgba(30, 36, 50, 0.8); /* Matching your dark theme */
-          border-radius: 6px;
+          background: rgba(30, 36, 50, 0.8);
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: rgba(0, 184, 212, 0.2);
+          border: 3px solid rgba(30, 36, 50, 0.8);
+          border-radius: 8px;
+
+          /* Create a more refined look with min-height */
+          min-height: 40px;
+        }
+
+        &::-webkit-scrollbar-thumb:hover {
+          background: rgba(0, 184, 212, 0.3);
+        }
+
+        &::-webkit-scrollbar-thumb:active {
+          background: rgba(0, 184, 212, 0.4);
+        }
+
+        /* Corner where vertical and horizontal scrollbars meet */
+        &::-webkit-scrollbar-corner {
+          background: rgba(30, 36, 50, 0.8);
         }
       }
 
       /* Firefox scrollbar styling */
       .code-toolbar pre {
         scrollbar-width: thin;
-        scrollbar-color: rgba(0, 184, 212, 0.3) rgba(30, 36, 50, 0.8);
+        scrollbar-color: rgba(0, 184, 212, 0.2) rgba(30, 36, 50, 0.8);
       }
 
-      /* Additional styling for expanded state */
+      /* Adjust scrollbar in expanded view */
       .code-toolbar.expanded pre {
-        max-height: calc(100vh - 8rem); /* Adjust height when expanded */
-        margin: 0;
-        padding: 1.5rem;
+        max-height: calc(100vh - 8rem);
+        scrollbar-gutter: stable; /* Prevents layout shift */
       }
 
-      /* Toolbar container */
       .code-toolbar > .toolbar {
-        position: absolute; /* Position absolutely within code-toolbar */
-        top: 0.75rem; /* Distance from top */
-        right: 1.75rem; /* Distance from right */
-        opacity: 1; /* Make sure it's always visible */
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
         display: flex;
-        align-items: center;
-        gap: 0.5rem;
+        gap: 0.75rem;
+        z-index: 10;
       }
 
-      /* Copy button styling */
+      /* Add a decorative header bar */
+      .code-toolbar::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #00b8d4, #00e5ff, #00b8d4);
+        opacity: 0.7;
+      }
+
+      /* Button styling */
       .toolbar-item button {
         background: rgba(0, 184, 212, 0.1);
         color: #00b8d4;
-        border: 1px solid rgba(0, 184, 212, 0.3);
-        padding: 0.5rem 1rem;
+        border: 1px solid rgba(0, 184, 212, 0.2);
+        padding: 0.5rem 1.25rem;
         border-radius: 6px;
         font-size: 0.9rem;
         font-weight: 500;
-        cursor: pointer;
+        backdrop-filter: blur(8px);
         transition: all 0.2s ease;
       }
 
-      /* Hover effect for the button */
+      /* Button hover effects */
       .toolbar-item button:hover {
-        background: rgba(0, 184, 212, 0.2);
-        border-color: rgba(0, 184, 212, 0.5);
+        background: rgba(0, 184, 212, 0.15);
+        border-color: rgba(0, 184, 212, 0.4);
         transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 184, 212, 0.15);
+      }
+
+      /* Add a subtle line number background */
+      .line-numbers-rows {
+        background: rgba(255, 255, 255, 0.02);
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
       }
 
       /* Active state for the button */
