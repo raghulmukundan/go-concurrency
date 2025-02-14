@@ -352,59 +352,62 @@
         font-weight: bold;
       }
 
-      /* Base container for code blocks */
-      div.code-toolbar {
-        position: relative;
-        margin-bottom: 2rem; /* Space below the entire code block */
+      /* Main container for code block */
+      .code-toolbar {
+        position: relative; /* This creates positioning context for absolute toolbar */
+        margin: 2rem 0;
+        background: #1e2432;
+        border-radius: 8px;
       }
 
-      /* Code block styling */
-      div.code-toolbar > pre[class*="language-"] {
-        margin: 0; /* Remove default margins */
-        padding: 1.5rem;
-        background: rgba(255, 255, 255, 0.03);
-        border-radius: 8px 8px 0 0; /* Rounded corners only on top */
+      /* Code block itself */
+      .code-toolbar pre {
+        margin: 0 !important;
+        padding: 1.5rem !important;
+        padding-top: 3rem !important; /* Extra padding at top to accommodate toolbar */
+        background: transparent !important;
+        font-size: 1rem;
+        line-height: 1.6;
       }
 
       /* Toolbar container */
-      div.code-toolbar > .toolbar {
-        position: relative; /* Change from absolute to relative */
-        opacity: 1;
-        padding: 0.5rem;
-        background: rgba(255, 255, 255, 0.02); /* Subtle background */
-        border-radius: 0 0 8px 8px; /* Rounded corners only on bottom */
-        border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator line */
+      .code-toolbar > .toolbar {
+        position: absolute; /* Position absolutely within code-toolbar */
+        top: 0.75rem; /* Distance from top */
+        right: 0.75rem; /* Distance from right */
+        opacity: 1; /* Make sure it's always visible */
         display: flex;
-        justify-content: flex-end; /* Align button to the right */
+        align-items: center;
+        gap: 0.5rem;
       }
 
       /* Copy button styling */
-      div.code-toolbar > .toolbar > .toolbar-item > button {
+      .toolbar-item button {
         background: rgba(0, 184, 212, 0.1);
-        border: 1px solid rgba(0, 184, 212, 0.3);
         color: #00b8d4;
+        border: 1px solid rgba(0, 184, 212, 0.3);
         padding: 0.5rem 1rem;
         border-radius: 6px;
-        cursor: pointer;
         font-size: 0.9rem;
-        font-family: inherit;
+        font-weight: 500;
+        cursor: pointer;
         transition: all 0.2s ease;
-        justify-content: normal;
       }
 
-      /* Hover state */
-      div.code-toolbar > .toolbar > .toolbar-item > button:hover {
+      /* Hover effect for the button */
+      .toolbar-item button:hover {
         background: rgba(0, 184, 212, 0.2);
         border-color: rgba(0, 184, 212, 0.5);
+        transform: translateY(-1px);
       }
 
-      /* Active/Click state */
-      div.code-toolbar > .toolbar > .toolbar-item > button:active {
-        background: rgba(0, 184, 212, 0.3);
+      /* Active state for the button */
+      .toolbar-item button:active {
+        transform: translateY(0);
       }
 
       /* Success state after copying */
-      div.code-toolbar > .toolbar > .toolbar-item > button.success {
+      .toolbar-item button[data-copy-state="copy-success"] {
         background: rgba(45, 212, 0, 0.1);
         border-color: rgba(45, 212, 0, 0.3);
         color: #2dd400;
