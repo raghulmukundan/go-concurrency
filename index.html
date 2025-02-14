@@ -413,6 +413,42 @@
         color: #2dd400;
       }
 
+      /* Expanded state styles */
+      .code-toolbar.expanded {
+        position: fixed;
+        top: 2rem;
+        left: 2rem;
+        right: 2rem;
+        bottom: 2rem;
+        z-index: 1000;
+        margin: 0;
+        overflow: hidden;
+        background: #1e2432;
+        border-radius: 12px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+      }
+
+      .code-toolbar.expanded pre {
+        height: calc(100% - 4rem);
+        overflow: auto;
+        padding-top: 3rem !important;
+      }
+
+      /* Overlay background when expanded */
+      .code-overlay {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.75);
+        z-index: 999;
+      }
+
+      .code-overlay.active {
+        display: block;
+      }
       /* Thought Exercise Container */
       .thought-exercise {
         background: rgba(0, 184, 212, 0.1); /* Subtle cyan background */
@@ -607,9 +643,84 @@
 
                 const code = await codeResponse.text();
 
-                // Create the code display elements
+                // Create the code toolbar structure
+                const codeToolbar = document.createElement("div");
+                codeToolbar.className = "code-toolbar";
+
                 const pre = document.createElement("pre");
                 const codeElement = document.createElement("code");
+
+                // Create toolbar
+                const toolbar = document.createElement("div");
+                toolbar.className = "toolbar";
+
+                // Create expand button
+                const expandToolbarItem = document.createElement("div");
+                expandToolbarItem.className = "toolbar-item";
+                const expandButton = document.createElement("button");
+                expandButton.type = "button";
+                expandButton.innerHTML = "<span>Expand</span>";
+                expandToolbarItem.appendChild(expandButton);
+
+                // Create copy button
+                const copyToolbarItem = document.createElement("div");
+                copyToolbarItem.className = "toolbar-item";
+                const copyButton = document.createElement("button");
+                copyButton.type = "button";
+                copyButton.className = "copy-to-clipboard-button";
+                copyButton.setAttribute("data-copy-state", "copy");
+                copyButton.innerHTML = "<span>Copy</span>";
+                copyToolbarItem.appendChild(copyButton);
+
+                // Add buttons to toolbar
+                toolbar.appendChild(expandToolbarItem);
+                toolbar.appendChild(copyToolbarItem);
+
+                // Assemble the structure
+                pre.appendChild(codeElement);
+                codeToolbar.appendChild(pre);
+                codeToolbar.appendChild(toolbar);
+
+                // Create overlay (if it doesn't exist)
+                let overlay = document.querySelector(".code-overlay");
+                if (!overlay) {
+                  overlay = document.createElement("div");
+                  overlay.className = "code-overlay";
+                  document.body.appendChild(overlay);
+                }
+
+                // Add expand button functionality
+                expandButton.addEventListener("click", () => {
+                  const isExpanded = codeToolbar.classList.toggle("expanded");
+                  overlay.classList.toggle("active");
+                  expandButton.querySelector("span").textContent = isExpanded
+                    ? "Collapse"
+                    : "Expand";
+                  document.body.style.overflow = isExpanded ? "hidden" : "";
+                });
+
+                // Add escape key handler
+                document.addEventListener("keydown", (e) => {
+                  if (
+                    e.key === "Escape" &&
+                    codeToolbar.classList.contains("expanded")
+                  ) {
+                    codeToolbar.classList.remove("expanded");
+                    overlay.classList.remove("active");
+                    expandButton.querySelector("span").textContent = "Expand";
+                    document.body.style.overflow = "";
+                  }
+                });
+
+                // Add overlay click handler
+                overlay.addEventListener("click", () => {
+                  if (codeToolbar.classList.contains("expanded")) {
+                    codeToolbar.classList.remove("expanded");
+                    overlay.classList.remove("active");
+                    expandButton.querySelector("span").textContent = "Expand";
+                    document.body.style.overflow = "";
+                  }
+                });
 
                 // Determine language from file extension
                 const fileExtension = codePath.split(".").pop();
@@ -621,8 +732,7 @@
 
                 // Clear existing content and add the new code
                 codeContainer.innerHTML = ""; // Clear the section
-                pre.appendChild(codeElement);
-                codeContainer.appendChild(pre);
+                codeContainer.appendChild(codeToolbar);
 
                 // Apply Prism highlighting
                 if (window.Prism) {
