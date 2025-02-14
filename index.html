@@ -360,14 +360,55 @@
         border-radius: 8px;
       }
 
-      /* Code block itself */
       .code-toolbar pre {
-        margin: 0 !important;
-        padding: 1.5rem !important;
-        padding-top: 3rem !important; /* Extra padding at top to accommodate toolbar */
-        background: transparent !important;
-        font-size: 1rem;
-        line-height: 1.6;
+        /* Set a max-height to trigger scrolling */
+        max-height: 400px; /* Adjust this value based on your needs */
+        overflow-y: auto;
+
+        /* Enable smooth scrolling for better user experience */
+        scroll-behavior: smooth;
+
+        /* Style the scrollbar for WebKit browsers (Chrome, Safari, etc.) */
+        &::-webkit-scrollbar {
+          width: 12px; /* Width of the scrollbar */
+          background-color: rgba(255, 255, 255, 0.05); /* Subtle background */
+        }
+
+        /* Style the scrollbar thumb (the draggable part) */
+        &::-webkit-scrollbar-thumb {
+          background: rgba(0, 184, 212, 0.3); /* Using your cyan accent color */
+          border-radius: 6px; /* Rounded corners */
+          border: 3px solid rgba(30, 36, 50, 0.8); /* Creates padding effect */
+
+          /* Add hover effect for better interactivity */
+          &:hover {
+            background: rgba(0, 184, 212, 0.4);
+          }
+
+          /* Style for active/clicking state */
+          &:active {
+            background: rgba(0, 184, 212, 0.5);
+          }
+        }
+
+        /* Style the scrollbar track */
+        &::-webkit-scrollbar-track {
+          background: rgba(30, 36, 50, 0.8); /* Matching your dark theme */
+          border-radius: 6px;
+        }
+      }
+
+      /* Firefox scrollbar styling */
+      .code-toolbar pre {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 184, 212, 0.3) rgba(30, 36, 50, 0.8);
+      }
+
+      /* Additional styling for expanded state */
+      .code-toolbar.expanded pre {
+        max-height: calc(100vh - 8rem); /* Adjust height when expanded */
+        margin: 0;
+        padding: 1.5rem;
       }
 
       /* Toolbar container */
