@@ -23,16 +23,17 @@
   </div>
   <div class="thought-exercise">
     <div class="thought-exercise-header">
-        <span class="thought-exercise-emoji">🤔</span>
-        <h4 class="thought-exercise-title">Thought Exercise:</h4>
+      <span class="thought-exercise-emoji">🤔</span>
+      <h4 class="thought-exercise-title">Thought Exercise:</h4>
     </div>
     <div class="thought-exercise-content">
-        Look at your computer's task manager or activity monitor right now.
-        <div class="thought-exercise-questions">
-            How many cores does your CPU have? How many programs are running simultaneously?
-        </div>
+      Look at your computer's task manager or activity monitor right now.
+      <div class="thought-exercise-questions">
+        How many cores does your CPU have? How many programs are running
+        simultaneously?
+      </div>
     </div>
-</div>
+  </div>
   <p>
     The world moved from single-core to multi-core processors, but many
     programming languages didn't change much. Most programming languages were
@@ -46,29 +47,19 @@
       <li>
         <span class="key-term">Goroutines: Lightweight Threads</span>
         <p>
-          Traditional threads like full-service restaurants, and goroutines like
-          food trucks. A restaurant needs a lot of infrastructure - a permanent
-          building, full kitchen equipment, dedicated staff, and extensive
-          utilities. They're powerful but expensive to set up and maintain, and
-          there's a practical limit to how many restaurants you can operate in
-          an area.
+          Traditional threads are like full-time employees - they need their own
+          office (memory space), benefits package (resources), and have
+          significant overhead. Goroutines are like task-based contractors -
+          lightweight, flexible, and you can have thousands of them!
         </p>
-        <p>
-          Goroutines are like food trucks - they're lightweight, flexible, and
-          efficient. You can easily have dozens of food trucks operating in the
-          same space where you might fit just one or two restaurants. Food
-          trucks can quickly start up, serve their purpose, and move on. They
-          share resources efficiently (like common eating areas) and can easily
-          coordinate with each other.
-        </p>
-        <p>
-          Just as a city can support thousands of food trucks more easily than
-          thousands of full restaurants, a Go program can efficiently manage
-          thousands of goroutines compared to traditional threads. When a food
-          truck finishes serving its customers, it simply packs up and leaves -
-          similar to how goroutines gracefully exit when their task is complete,
-          freeing up resources for others.
-        </p>
+        <div class="code-section">
+          <h3>A Simple Goroutine</h3>
+          <div
+            id="basic-example"
+            class="code-container"
+            data-code-path="go-concurrency/goroutine.go"
+          ></div>
+        </div>
       </li>
     </ul>
   </div>
