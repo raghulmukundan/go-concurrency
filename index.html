@@ -648,7 +648,6 @@
                 codeToolbar.className = "code-toolbar";
 
                 const pre = document.createElement("pre");
-                pre.className = "line-numbers"; // Add line numbers support
                 const codeElement = document.createElement("code");
 
                 // Create toolbar
@@ -659,15 +658,19 @@
                 const expandToolbarItem = document.createElement("div");
                 expandToolbarItem.className = "toolbar-item";
                 const expandButton = document.createElement("button");
-                expandButton.className = "expand-button";
                 expandButton.type = "button";
                 expandButton.innerHTML = "<span>Expand</span>";
                 expandToolbarItem.appendChild(expandButton);
 
-                // Let Prism handle the copy button creation
-                // We'll just create the container for it
+                // Create copy button
                 const copyToolbarItem = document.createElement("div");
                 copyToolbarItem.className = "toolbar-item";
+                const copyButton = document.createElement("button");
+                copyButton.className = "copy-to-clipboard-button";
+                copyButton.type = "button";
+                copyButton.setAttribute("data-copy-state", "copy");
+                copyButton.innerHTML = "<span>Copy</span>";
+                copyToolbarItem.appendChild(copyButton);
 
                 // Add buttons to toolbar
                 toolbar.appendChild(expandToolbarItem);
@@ -677,6 +680,10 @@
                 pre.appendChild(codeElement);
                 codeToolbar.appendChild(pre);
                 codeToolbar.appendChild(toolbar);
+
+                // Set up code element properties
+                codeElement.className = `language-${languageClass}`;
+                codeElement.textContent = code;
 
                 // Create overlay (if it doesn't exist)
                 let overlay = document.querySelector(".code-overlay");
