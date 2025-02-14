@@ -725,10 +725,6 @@
                   }
                 });
 
-                // Determine language from file extension
-                const fileExtension = codePath.split(".").pop();
-                const languageClass = fileExtension;
-
                 // Set up the code element
                 codeElement.className = `language-${languageClass}`;
                 codeElement.textContent = code;
