@@ -646,20 +646,24 @@
                 const fileExtension = codePath.split(".").pop();
                 const languageClass = fileExtension;
 
-                // First, create the main container with the correct class
+                // Create the code toolbar structure with all necessary classes for Prism plugins
                 const codeToolbar = document.createElement("div");
                 codeToolbar.className = "code-toolbar";
 
                 // Create and set up the pre element
                 const pre = document.createElement("pre");
-                pre.className = `language-${languageClass} line-numbers`; // Include language class here
+                pre.className = `language-${languageClass} line-numbers`;
 
                 // Create and set up the code element
                 const codeElement = document.createElement("code");
-                codeElement.className = `language-${languageClass}`; // Language class needed here too
-                codeElement.textContent = code; // Set the actual code content
+                codeElement.className = `language-${languageClass}`;
+                codeElement.textContent = code;
 
-                // Create the toolbar for our buttons
+                // Assemble the code structure first
+                pre.appendChild(codeElement);
+                codeToolbar.appendChild(pre);
+
+                // Now create our custom toolbar for the expand button only
                 const toolbar = document.createElement("div");
                 toolbar.className = "toolbar";
 
@@ -671,15 +675,11 @@
                 expandButton.innerHTML = "<span>Expand</span>";
                 expandToolbarItem.appendChild(expandButton);
 
-                // Add expand button to toolbar
+                // Add expand button to toolbar and add toolbar to code container
                 toolbar.appendChild(expandToolbarItem);
-
-                // Important: Assemble everything in the correct order
-                pre.appendChild(codeElement);
-                codeToolbar.appendChild(pre);
                 codeToolbar.appendChild(toolbar);
 
-                // Handle expand functionality
+                // Handle overlay creation and expand functionality
                 let overlay = document.querySelector(".code-overlay");
                 if (!overlay) {
                   overlay = document.createElement("div");
@@ -697,43 +697,13 @@
                   document.body.style.overflow = isExpanded ? "hidden" : "";
                 });
 
-                // Clear the container and add our new elements
+                // Clear container and add our new structure
                 codeContainer.innerHTML = "";
                 codeContainer.appendChild(codeToolbar);
 
-                // This is crucial: Force Prism to reprocess this code block
-                Prism.highlightElement(codeElement);
-
-                // After highlighting, manually trigger Prism's toolbar registration
-                if (window.Prism && Prism.plugins && Prism.plugins.toolbar) {
-                  // Small delay to ensure proper initialization
-                  setTimeout(() => {
-                    Prism.plugins.toolbar.registerButton(
-                      "copy-to-clipboard",
-                      function (env) {
-                        const button = document.createElement("button");
-                        button.textContent = "Copy";
-                        button.addEventListener("click", function () {
-                          // Create a temporary textarea to copy the code
-                          const textArea = document.createElement("textarea");
-                          textArea.value = env.code;
-                          document.body.appendChild(textArea);
-                          textArea.select();
-                          try {
-                            document.execCommand("copy");
-                            button.textContent = "Copied!";
-                            setTimeout(() => {
-                              button.textContent = "Copy";
-                            }, 2000);
-                          } catch (err) {
-                            button.textContent = "Error!";
-                          }
-                          document.body.removeChild(textArea);
-                        });
-                        return button;
-                      }
-                    );
-                  }, 100);
+                // Let Prism do its work
+                if (window.Prism) {
+                  Prism.highlightElement(codeElement);
                 }
               } catch (error) {
                 console.error(`Error loading code for section:`, error);
