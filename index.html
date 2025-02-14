@@ -643,12 +643,20 @@
 
                 const code = await codeResponse.text();
 
+                // First, determine language from file extension
+                const fileExtension = codePath.split(".").pop();
+                const languageClass = fileExtension;
+
                 // Create the code toolbar structure
                 const codeToolbar = document.createElement("div");
                 codeToolbar.className = "code-toolbar";
 
                 const pre = document.createElement("pre");
+                pre.className = "language-go line-numbers"; // Add language and line numbers
+
                 const codeElement = document.createElement("code");
+                codeElement.className = `language-${languageClass}`;
+                codeElement.textContent = code; // Set the code content
 
                 // Create toolbar
                 const toolbar = document.createElement("div");
@@ -676,14 +684,10 @@
                 toolbar.appendChild(expandToolbarItem);
                 toolbar.appendChild(copyToolbarItem);
 
-                // Assemble the structure
-                pre.appendChild(codeElement);
-                codeToolbar.appendChild(pre);
-                codeToolbar.appendChild(toolbar);
-
-                // Set up code element properties
-                codeElement.className = `language-${languageClass}`;
-                codeElement.textContent = code;
+                // Assemble the structure in the correct order
+                pre.appendChild(codeElement); // First, put code inside pre
+                codeToolbar.appendChild(pre); // Then put pre inside toolbar
+                codeToolbar.appendChild(toolbar); // Then add the buttons toolbar
 
                 // Create overlay (if it doesn't exist)
                 let overlay = document.querySelector(".code-overlay");
@@ -726,15 +730,7 @@
                   }
                 });
 
-                // Determine language from file extension
-                const fileExtension = codePath.split(".").pop();
-                const languageClass = fileExtension;
-
-                // Set up the code element
-                codeElement.className = `language-${languageClass}`;
-                codeElement.textContent = code;
-
-                // Clear existing content and add the new code
+                // Clear container and add the new structure
                 codeContainer.innerHTML = ""; // Clear the section
                 codeContainer.appendChild(codeToolbar);
 
