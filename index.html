@@ -665,18 +665,17 @@
                 expandButton.innerHTML = "<span>Expand</span>";
                 expandToolbarItem.appendChild(expandButton);
 
-                // Create copy button using the class name expected by Prism copy plugin
+                // Create custom copy button (using a custom class to avoid Prism conflicts)
                 const copyToolbarItem = document.createElement("div");
                 copyToolbarItem.className = "toolbar-item";
                 const copyButton = document.createElement("button");
                 copyButton.type = "button";
-                // IMPORTANT: Use the class name "copy-to-clipboard" (not "copy-to-clipboard-button")
-                copyButton.className = "copy-to-clipboard";
-                copyButton.setAttribute("data-copy-state", "copy");
+                // Using a custom class name so Prism’s copy plugin doesn’t interfere.
+                copyButton.className = "custom-copy-to-clipboard";
                 copyButton.innerHTML = "<span>Copy</span>";
                 copyToolbarItem.appendChild(copyButton);
 
-                // Add buttons to the toolbar
+                // Add buttons to toolbar
                 toolbar.appendChild(expandToolbarItem);
                 toolbar.appendChild(copyToolbarItem);
 
@@ -693,7 +692,7 @@
                   document.body.appendChild(overlay);
                 }
 
-                // Expand button functionality
+                // Add expand button functionality
                 expandButton.addEventListener("click", () => {
                   const isExpanded = codeToolbar.classList.toggle("expanded");
                   overlay.classList.toggle("active");
@@ -703,7 +702,7 @@
                   document.body.style.overflow = isExpanded ? "hidden" : "";
                 });
 
-                // Escape key handler to collapse expanded code
+                // Add escape key handler
                 document.addEventListener("keydown", (e) => {
                   if (
                     e.key === "Escape" &&
@@ -716,7 +715,7 @@
                   }
                 });
 
-                // Overlay click handler to collapse expanded code
+                // Add overlay click handler
                 overlay.addEventListener("click", () => {
                   if (codeToolbar.classList.contains("expanded")) {
                     codeToolbar.classList.remove("expanded");
@@ -734,11 +733,27 @@
                 codeContainer.innerHTML = "";
                 codeContainer.appendChild(codeToolbar);
 
-                // Apply Prism highlighting; this should also trigger the Prism toolbar plugins,
-                // including the copy functionality attached to your copy button.
+                // Apply Prism highlighting (only for syntax highlighting)
                 if (window.Prism) {
                   Prism.highlightElement(codeElement);
                 }
+
+                // Custom copy button functionality using the Clipboard API
+                copyButton.addEventListener("click", async () => {
+                  try {
+                    await navigator.clipboard.writeText(code);
+                    copyButton.innerHTML = "<span>Copied!</span>";
+                    setTimeout(() => {
+                      copyButton.innerHTML = "<span>Copy</span>";
+                    }, 2000);
+                  } catch (err) {
+                    console.error("Failed to copy code:", err);
+                    copyButton.innerHTML = "<span>Failed to copy</span>";
+                    setTimeout(() => {
+                      copyButton.innerHTML = "<span>Copy</span>";
+                    }, 2000);
+                  }
+                });
               } catch (error) {
                 console.error("Error loading code for section:", error);
                 section.innerHTML = `<div class="error-message">Failed to load code: ${error.message}</div>`;
