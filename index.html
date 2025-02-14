@@ -646,24 +646,14 @@
                 const fileExtension = codePath.split(".").pop();
                 const languageClass = fileExtension;
 
-                // Create the code toolbar structure with all necessary classes for Prism plugins
+                // Create the code toolbar structure
                 const codeToolbar = document.createElement("div");
                 codeToolbar.className = "code-toolbar";
 
-                // Create and set up the pre element
                 const pre = document.createElement("pre");
-                pre.className = `language-${languageClass} line-numbers`;
-
-                // Create and set up the code element
                 const codeElement = document.createElement("code");
-                codeElement.className = `language-${languageClass}`;
-                codeElement.textContent = code;
 
-                // Assemble the code structure first
-                pre.appendChild(codeElement);
-                codeToolbar.appendChild(pre);
-
-                // Now create our custom toolbar for the expand button only
+                // Create toolbar
                 const toolbar = document.createElement("div");
                 toolbar.className = "toolbar";
 
@@ -675,11 +665,26 @@
                 expandButton.innerHTML = "<span>Expand</span>";
                 expandToolbarItem.appendChild(expandButton);
 
-                // Add expand button to toolbar and add toolbar to code container
+                // Create copy button
+                const copyToolbarItem = document.createElement("div");
+                copyToolbarItem.className = "toolbar-item";
+                const copyButton = document.createElement("button");
+                copyButton.type = "button";
+                copyButton.className = "copy-to-clipboard-button";
+                copyButton.setAttribute("data-copy-state", "copy");
+                copyButton.innerHTML = "<span>Copy</span>";
+                copyToolbarItem.appendChild(copyButton);
+
+                // Add buttons to toolbar
                 toolbar.appendChild(expandToolbarItem);
+                toolbar.appendChild(copyToolbarItem);
+
+                // Assemble the structure
+                pre.appendChild(codeElement);
+                codeToolbar.appendChild(pre);
                 codeToolbar.appendChild(toolbar);
 
-                // Handle overlay creation and expand functionality
+                // Create overlay (if it doesn't exist)
                 let overlay = document.querySelector(".code-overlay");
                 if (!overlay) {
                   overlay = document.createElement("div");
@@ -687,7 +692,7 @@
                   document.body.appendChild(overlay);
                 }
 
-                // Add expand button event listeners
+                // Add expand button functionality
                 expandButton.addEventListener("click", () => {
                   const isExpanded = codeToolbar.classList.toggle("expanded");
                   overlay.classList.toggle("active");
@@ -697,11 +702,42 @@
                   document.body.style.overflow = isExpanded ? "hidden" : "";
                 });
 
-                // Clear container and add our new structure
-                codeContainer.innerHTML = "";
+                // Add escape key handler
+                document.addEventListener("keydown", (e) => {
+                  if (
+                    e.key === "Escape" &&
+                    codeToolbar.classList.contains("expanded")
+                  ) {
+                    codeToolbar.classList.remove("expanded");
+                    overlay.classList.remove("active");
+                    expandButton.querySelector("span").textContent = "Expand";
+                    document.body.style.overflow = "";
+                  }
+                });
+
+                // Add overlay click handler
+                overlay.addEventListener("click", () => {
+                  if (codeToolbar.classList.contains("expanded")) {
+                    codeToolbar.classList.remove("expanded");
+                    overlay.classList.remove("active");
+                    expandButton.querySelector("span").textContent = "Expand";
+                    document.body.style.overflow = "";
+                  }
+                });
+
+                // Determine language from file extension
+                const fileExtension = codePath.split(".").pop();
+                const languageClass = fileExtension;
+
+                // Set up the code element
+                codeElement.className = `language-${languageClass}`;
+                codeElement.textContent = code;
+
+                // Clear existing content and add the new code
+                codeContainer.innerHTML = ""; // Clear the section
                 codeContainer.appendChild(codeToolbar);
 
-                // Let Prism do its work
+                // Apply Prism highlighting
                 if (window.Prism) {
                   Prism.highlightElement(codeElement);
                 }
