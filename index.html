@@ -352,147 +352,145 @@
         font-weight: bold;
       }
 
-      /* Main container for code block */
+      /* Main code block container */
       .code-toolbar {
-        position: relative; /* This creates positioning context for absolute toolbar */
-        background: #1e2432;
-        border-radius: 8px;
+        position: relative;
+        margin: 2rem 0;
+        background: #1a1f2c; /* Base dark background */
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1),
+          inset 0 0 0 1px rgba(255, 255, 255, 0.05); /* Subtle inner glow */
       }
 
-      /* Add these scrollbar styles to the previous CSS */
-      .code-toolbar pre {
-        /* Keep existing pre styles and add: */
-        max-height: 400px; /* Trigger scrollbar after this height */
-        overflow-y: auto;
-        scroll-behavior: smooth;
-
-        /* Webkit scrollbar styling (Chrome, Safari, Edge) */
-        &::-webkit-scrollbar {
-          width: 10px;
-          height: 10px; /* For horizontal scrolling if needed */
-        }
-
-        &::-webkit-scrollbar-track {
-          background: rgba(30, 36, 50, 0.8);
-        }
-
-        &::-webkit-scrollbar-thumb {
-          background: rgba(0, 184, 212, 0.2);
-          border: 3px solid rgba(30, 36, 50, 0.8);
-          border-radius: 8px;
-
-          /* Create a more refined look with min-height */
-          min-height: 40px;
-        }
-
-        &::-webkit-scrollbar-thumb:hover {
-          background: rgba(0, 184, 212, 0.3);
-        }
-
-        &::-webkit-scrollbar-thumb:active {
-          background: rgba(0, 184, 212, 0.4);
-        }
-
-        /* Corner where vertical and horizontal scrollbars meet */
-        &::-webkit-scrollbar-corner {
-          background: rgba(30, 36, 50, 0.8);
-        }
-      }
-
-      /* Firefox scrollbar styling */
-      .code-toolbar pre {
-        scrollbar-width: thin;
-        scrollbar-color: rgba(0, 184, 212, 0.2) rgba(30, 36, 50, 0.8);
-      }
-
-      /* Adjust scrollbar in expanded view */
-      .code-toolbar.expanded pre {
-        max-height: calc(100vh - 8rem);
-        scrollbar-gutter: stable; /* Prevents layout shift */
-      }
-
-      .code-toolbar > .toolbar {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        display: flex;
-        gap: 0.75rem;
-        z-index: 10;
-      }
-
-      /* Add a decorative header bar */
+      /* Terminal-like header with decorative elements */
       .code-toolbar::before {
         content: "";
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #00b8d4, #00e5ff, #00b8d4);
-        opacity: 0.7;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.02);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      }
+
+      /* Decorative dots in header */
+      .code-toolbar::after {
+        content: "";
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        width: 12px;
+        height: 12px;
+        background: #ff5f57; /* Red dot */
+        border-radius: 50%;
+        box-shadow: 24px 0 0 #febc2e, /* Yellow dot */ 48px 0 0 #28c840; /* Green dot */
+      }
+
+      /* Code block styling */
+      .code-toolbar pre {
+        margin: 0 !important;
+        padding: 60px 24px 24px !important; /* Extra padding for header */
+        background: transparent !important;
+        font-family: "JetBrains Mono", "Fira Code", monospace;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        max-height: 500px;
+        overflow-y: auto;
+        scroll-behavior: smooth;
+      }
+
+      /* Webkit scrollbar styling (Chrome, Safari, Edge) */
+      .code-toolbar pre::-webkit-scrollbar {
+        width: 8px;
+        height: 8px; /* For horizontal scrolling if needed */
+      }
+
+      .code-toolbar pre::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .code-toolbar pre::-webkit-scrollbar-thumb {
+        background: rgba(0, 184, 212, 0.2);
+        border-radius: 4px;
+        min-height: 40px; /* Minimum thumb size */
+      }
+
+      .code-toolbar pre::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 184, 212, 0.3);
+      }
+
+      .code-toolbar pre::-webkit-scrollbar-thumb:active {
+        background: rgba(0, 184, 212, 0.4);
+      }
+
+      .code-toolbar pre::-webkit-scrollbar-corner {
+        background: transparent;
+      }
+
+      /* Firefox scrollbar styling */
+      .code-toolbar pre {
+        scrollbar-width: thin;
+        scrollbar-color: rgba(0, 184, 212, 0.2) transparent;
+      }
+
+      /* Line numbers styling */
+      .line-numbers-rows {
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 60px 0 24px; /* Match pre padding */
+      }
+
+      .line-numbers-rows > span:before {
+        color: rgba(255, 255, 255, 0.3);
+      }
+
+      /* Toolbar styling */
+      .code-toolbar > .toolbar {
+        position: absolute;
+        top: 8px;
+        right: 16px;
+        display: flex;
+        gap: 8px;
+        z-index: 10;
       }
 
       /* Button styling */
       .toolbar-item button {
-        background: rgba(0, 184, 212, 0.1);
-        color: #00b8d4;
-        border: 1px solid rgba(0, 184, 212, 0.2);
-        padding: 0.5rem 1.25rem;
+        background: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.7);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 6px 12px;
         border-radius: 6px;
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         font-weight: 500;
-        backdrop-filter: blur(8px);
         transition: all 0.2s ease;
       }
 
-      /* Button hover effects */
       .toolbar-item button:hover {
-        background: rgba(0, 184, 212, 0.15);
-        border-color: rgba(0, 184, 212, 0.4);
+        background: rgba(0, 184, 212, 0.1);
+        color: #00b8d4;
+        border-color: rgba(0, 184, 212, 0.3);
         transform: translateY(-1px);
-        box-shadow: 0 2px 8px rgba(0, 184, 212, 0.15);
-      }
-
-      /* Add a subtle line number background */
-      .line-numbers-rows {
-        background: rgba(255, 255, 255, 0.02);
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-      }
-
-      /* Active state for the button */
-      .toolbar-item button:active {
-        transform: translateY(0);
-      }
-
-      /* Success state after copying */
-      .toolbar-item button[data-copy-state="copy-success"] {
-        background: rgba(45, 212, 0, 0.1);
-        border-color: rgba(45, 212, 0, 0.3);
-        color: #2dd400;
       }
 
       /* Expanded state styles */
       .code-toolbar.expanded {
         position: fixed;
-        top: 2rem;
-        left: 2rem;
-        right: 2rem;
-        bottom: 2rem;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90vw;
+        height: 90vh;
         z-index: 1000;
-        margin: 0;
-        overflow: hidden;
-        background: #1e2432;
-        border-radius: 12px;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
       }
 
       .code-toolbar.expanded pre {
-        height: calc(100% - 4rem);
-        overflow: auto;
-        padding-top: 3rem !important;
+        height: calc(100% - 60px); /* Account for header */
+        max-height: none;
       }
 
-      /* Overlay background when expanded */
+      /* Overlay for expanded state */
       .code-overlay {
         display: none;
         position: fixed;
@@ -506,6 +504,13 @@
 
       .code-overlay.active {
         display: block;
+      }
+
+      /* Success state for copy button */
+      .toolbar-item button[data-copy-state="copy-success"] {
+        background: rgba(45, 212, 0, 0.1);
+        border-color: rgba(45, 212, 0, 0.3);
+        color: #2dd400;
       }
       /* Thought Exercise Container */
       .thought-exercise {
