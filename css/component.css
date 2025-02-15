@@ -1,0 +1,170 @@
+/* Key terms (like "Task Interleaving:") */
+.characteristics .key-term {
+  color: #2de2e6; /* A slightly softer cyan that's easier on the eyes */
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+/* Heading style */
+.characteristics h2 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  color: #e9e5ff;
+}
+
+/* List container */
+.characteristics ul {
+  list-style: none; /* Remove default bullets */
+  padding-left: 0;
+}
+
+/* List items */
+.characteristics li {
+  position: relative;
+  padding-left: 1.7rem;
+  margin: 0.8rem 0;
+  line-height: 1.7;
+}
+
+/* Custom bullet points using pseudo-element */
+.characteristics li::before {
+  content: "•";
+  color: #00b8d4; /* Your cyan accent color */
+  position: absolute;
+  left: 0;
+  font-size: 1.2em;
+}
+
+/* Bold text for term definitions */
+.characteristics li strong {
+  color: #00b8d4;
+  font-weight: 500;
+  margin-right: 0.5rem;
+}
+
+.comparison-grid {
+  margin: 2rem 0;
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.aspect-card {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.aspect-card h3 {
+  color: #00b8d4;
+  margin-bottom: 1rem;
+}
+
+.comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.leftgrid,
+.rightgrid {
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 6px;
+}
+
+.comparison h4 {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+}
+/* Summary section styling */
+.summary-section {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  padding: 1.7rem 2rem;
+  margin: 1.5rem 0;
+  border-left: 4px solid #00b8d4;
+}
+
+.summary-content p {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0.8rem 0;
+  letter-spacing: 0.01em;
+}
+
+.summary-header {
+  display: flex;
+  align-items: center;
+}
+
+.summary-icon {
+  color: #00b8d4;
+  margin-right: 1rem;
+  margin-top: 0.7rem;
+}
+
+.summary-title {
+  color: #e9ecef;
+  font-size: 1.9rem;
+  font-weight: 500;
+}
+
+.summary-content {
+  color: rgba(255, 255, 255, 0.87);
+  line-height: 1.7;
+}
+
+.key-point {
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.key-point::before {
+  content: "•";
+  color: #00b8d4;
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+}
+
+/* Header with emoji */
+.thought-exercise-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* Emoji styling */
+.thought-exercise-emoji {
+  font-size: 1.5rem;
+  /* Prevent emoji from being selectable with code */
+  user-select: none;
+}
+
+/* Title styling */
+.thought-exercise-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #00b8d4;
+  margin: 0;
+}
+
+/* Content styling */
+.thought-exercise-content {
+  color: rgba(255, 255, 255, 0.87);
+  line-height: 1.6;
+  font-size: 1.1rem;
+  margin-top: 1rem;
+}
+
+/* Questions styling */
+.thought-exercise-questions {
+  margin-top: 1rem;
+  padding-left: 1.25rem;
+  border-left: 2px solid rgba(0, 184, 212, 0.3);
+}

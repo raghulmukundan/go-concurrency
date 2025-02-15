@@ -1,0 +1,244 @@
+/* Main code block container - modern IDE-like appearance */
+.code-toolbar {
+  position: relative;
+  margin: 2rem 0;
+  background: #1e1e1e; /* VS Code-inspired dark background */
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+/* Header bar styling with title bar appearance */
+.code-toolbar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: #252526; /* Slightly lighter than main background */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* macOS-style window controls */
+.code-toolbar::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: 16px;
+  width: 12px;
+  height: 12px;
+  background: #ff5f57; /* Close button red */
+  border-radius: 50%;
+  box-shadow: 24px 0 0 #febc2e, /* Minimize yellow */ 48px 0 0 #28c840; /* Expand green */
+}
+
+/* Code block pre element - main content container */
+.code-toolbar pre {
+  margin: 0 !important;
+  padding: 52px 24px 24px !important; /* Extra top padding for header */
+  background: transparent !important;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+/* Modern IDE-inspired scrollbar styling */
+.code-toolbar pre::-webkit-scrollbar {
+  width: 14px; /* Wider scrollbar for better usability */
+  height: 14px; /* For horizontal scrolling */
+}
+
+.code-toolbar pre::-webkit-scrollbar-track {
+  background: #1e1e1e; /* Match code background */
+}
+
+.code-toolbar pre::-webkit-scrollbar-thumb {
+  background-color: #424242; /* Neutral gray for thumb */
+  border: 4px solid #1e1e1e; /* Creates padding effect */
+  border-radius: 7px;
+  min-height: 40px;
+}
+
+.code-toolbar pre::-webkit-scrollbar-thumb:hover {
+  background-color: #505050;
+}
+
+.code-toolbar pre::-webkit-scrollbar-corner {
+  background: #1e1e1e;
+}
+
+/* Firefox scrollbar compatibility */
+.code-toolbar pre {
+  scrollbar-width: thin;
+  scrollbar-color: #424242 #1e1e1e;
+}
+
+/* Action buttons container */
+.code-toolbar > .toolbar {
+  position: absolute;
+  top: 4px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+/* Button styling */
+.toolbar-item button {
+  background: #2d2d2d;
+  color: #d4d4d4;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  z-index: 20;
+}
+
+/* Button hover state */
+.toolbar-item button:hover {
+  background: #3d3d3d;
+  border-color: rgba(0, 184, 212, 0.4);
+  color: #00b8d4;
+}
+
+/* Button active state */
+.toolbar-item button:active {
+  transform: translateY(1px);
+}
+
+/* Copy success state */
+.toolbar-item button[data-copy-state="copy-success"] {
+  background: #1e4620; /* VS Code success green */
+  border-color: #24592e;
+  color: #89d185;
+}
+
+/* Common button styling used by both expand and copy buttons */
+.toolbar-item button,
+.custom-copy-to-clipboard {
+  /* Base appearance */
+  background: #2d2d2d;
+  color: #d4d4d4;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  /* Making buttons square and centered */
+  width: 32px;
+  height: 32px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Modern styling */
+  border-radius: 4px;
+  font-size: 0.95rem;
+  cursor: pointer;
+
+  /* Smooth transitions */
+  transition: all 0.15s ease;
+  z-index: 20;
+}
+
+/* Icon styling within buttons */
+.toolbar-item button i,
+.custom-copy-to-clipboard i {
+  font-size: 1rem;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+/* Hover effects for both buttons */
+.toolbar-item button:hover,
+.custom-copy-to-clipboard:hover {
+  background: #3d3d3d;
+  border-color: rgba(0, 184, 212, 0.4);
+  color: #00b8d4;
+  transform: translateY(-1px);
+}
+
+/* Active/Click state for both buttons */
+.toolbar-item button:active i,
+.custom-copy-to-clipboard:active i {
+  transform: scale(0.9);
+}
+
+/* Success state for copy button */
+.custom-copy-to-clipboard.copy-success {
+  background: #1e4620; /* VS Code-inspired success green */
+  border-color: #24592e;
+  color: #89d185;
+}
+
+/* Error state for copy button */
+.custom-copy-to-clipboard.copy-error {
+  background: #4e1f1f; /* Error state red */
+  border-color: #592424;
+  color: #d18585;
+}
+
+/* Return animation for both buttons */
+.toolbar-item button,
+.custom-copy-to-clipboard {
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease, transform 0.2s ease;
+}
+
+/* Container for expanded state */
+.code-toolbar.expanded {
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  height: 90vh;
+  z-index: 1000;
+}
+
+/* Adjust scrollable area in expanded state */
+.code-toolbar.expanded pre {
+  height: calc(100% - 52px); /* Account for header */
+  max-height: none;
+}
+
+/* Overlay styling */
+.code-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 999;
+}
+
+/* Active overlay state */
+.code-overlay.active {
+  display: block;
+}
+/* Line numbers customization */
+.line-numbers-rows {
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 52px 0 24px; /* Match pre padding */
+}
+
+.line-numbers-rows > span:before {
+  color: rgba(255, 255, 255, 0.3);
+  padding-right: 1.5em;
+}
+/* Thought Exercise Container */
+.thought-exercise {
+  background: rgba(0, 184, 212, 0.1); /* Subtle cyan background */
+  border-left: 4px solid #00b8d4; /* Cyan accent bar */
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}

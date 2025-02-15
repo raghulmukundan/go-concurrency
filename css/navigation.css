@@ -1,0 +1,74 @@
+.sidebar {
+  width: 300px;
+  background: var(--nav-bg);
+  padding: 2rem;
+  position: fixed;
+  height: 100vh;
+  overflow-y: auto;
+  background-color: #141923;
+}
+
+/* Navigation Styles */
+.nav-list {
+  list-style: none;
+}
+
+/* Each section container */
+.nav-section {
+  margin-bottom: 1rem;
+}
+
+/* Section header (always visible) */
+.nav-section .section-header {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  transition: background-color 0.2s;
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.nav-section .section-header:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.section-header.active {
+  background: #0096a8;
+}
+
+/* Topic list within a section */
+.nav-section .section-topics {
+  list-style: none;
+  padding-left: 1rem;
+  margin-top: 0.5rem;
+  display: none; /* Hidden by default */
+}
+
+/* When a section is active (expanded) */
+.nav-section.active .section-topics {
+  display: block;
+}
+
+.nav-item {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.nav-link {
+  color: var(--text-color);
+  text-decoration: none;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  display: block;
+  transition: background-color 0.2s;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+  color: white;
+  background-color: #00acc1;
+}

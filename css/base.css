@@ -1,0 +1,77 @@
+:root {
+  --primary-color: #00add8;
+  --bg-color: #0f172a;
+  --text-color: #e2e8f0;
+  --nav-bg: #1e293b;
+  --code-bg: #1a1a1a;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1a1f2c;
+  color: rgba(
+    255,
+    255,
+    255,
+    0.87
+  ); /* Slightly softer white for better eye comfort */
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif; /* Modern, clean font stack */
+  font-size: 1.1rem; /* Slightly larger base font size */
+  line-height: 1.6; /* Better line height for readability */
+}
+
+.container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.content {
+  margin: 0 auto;
+  margin-left: 300px;
+  padding: 2rem;
+  flex-grow: 1;
+  max-width: 800px;
+  background-color: #1a1f2c;
+}
+
+p {
+  color: rgba(255, 255, 255, 0.85); /* Even softer white for better reading */
+  margin: 1.25rem 0;
+  letter-spacing: 0.01em; /* Slightly increased letter spacing */
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #f5f3ff;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 2rem;
+  margin: 1rem 0 1rem 0;
+  color: #e9e5ff;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin: 0rem 0 1rem 0;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
