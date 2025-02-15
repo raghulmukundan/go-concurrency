@@ -834,21 +834,6 @@
                   }
                 });
 
-                // Add overlay click handler
-                overlay.addEventListener("click", () => {
-                  if (codeToolbar.classList.contains("expanded")) {
-                    // Reset expanded state
-                    codeToolbar.classList.remove("expanded");
-                    // Remove overlay
-                    overlay.classList.remove("active");
-                    // Update icon back to expand icon
-                    expandButton.innerHTML =
-                      '<i class="fa-solid fa-expand"></i>';
-                    // Re-enable body scrolling
-                    document.body.style.overflow = "";
-                  }
-                });
-
                 // Create custom copy button
                 const copyToolbarItem = document.createElement("div");
                 copyToolbarItem.className = "toolbar-item";
@@ -910,6 +895,21 @@
                   overlay.className = "code-overlay";
                   document.body.appendChild(overlay);
                 }
+
+                 // Add overlay click handler
+                 overlay.addEventListener("click", () => {
+                  if (codeToolbar.classList.contains("expanded")) {
+                    // Reset expanded state
+                    codeToolbar.classList.remove("expanded");
+                    // Remove overlay
+                    overlay.classList.remove("active");
+                    // Update icon back to expand icon
+                    expandButton.innerHTML =
+                      '<i class="fa-solid fa-expand"></i>';
+                    // Re-enable body scrolling
+                    document.body.style.overflow = "";
+                  }
+                });
 
                 // Set up the code element
                 codeElement.className = `language-${languageClass}`;
