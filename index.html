@@ -352,18 +352,18 @@
         font-weight: bold;
       }
 
-      /* Main code block container */
+      /* Code block container */
       .code-toolbar {
         position: relative;
         margin: 2rem 0;
-        background: #1a1f2c; /* Base dark background */
-        border-radius: 16px;
+        background: #1e1e1e; /* VS Code-like dark background */
+        border-radius: 12px;
         overflow: hidden;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1),
-          inset 0 0 0 1px rgba(255, 255, 255, 0.05); /* Subtle inner glow */
+          inset 0 0 0 1px rgba(255, 255, 255, 0.05);
       }
 
-      /* Terminal-like header with decorative elements */
+      /* Header bar with unified styling */
       .code-toolbar::before {
         content: "";
         position: absolute;
@@ -371,81 +371,91 @@
         left: 0;
         right: 0;
         height: 40px;
-        background: rgba(255, 255, 255, 0.02);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        background: #252526; /* VS Code-like header color */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       }
 
-      /* Decorative dots in header */
+      /* Terminal dots */
       .code-toolbar::after {
         content: "";
         position: absolute;
-        top: 16px;
+        top: 14px;
         left: 16px;
         width: 12px;
         height: 12px;
-        background: #ff5f57; /* Red dot */
+        background: #ff5f57;
         border-radius: 50%;
-        box-shadow: 24px 0 0 #febc2e, /* Yellow dot */ 48px 0 0 #28c840; /* Green dot */
+        box-shadow: 24px 0 0 #febc2e, 48px 0 0 #28c840;
       }
 
-      /* Code block styling */
+      /* Enhanced button styling */
+      .toolbar-item button {
+        background: #2d2d2d; /* Darker background for buttons */
+        color: #d4d4d4; /* VS Code-like text color */
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 6px 14px;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        transition: all 0.15s ease;
+        backdrop-filter: blur(8px);
+      }
+
+      .toolbar-item button:hover {
+        background: #3d3d3d;
+        border-color: rgba(0, 184, 212, 0.4);
+        color: #00b8d4;
+      }
+
+      .toolbar-item button:active {
+        transform: translateY(1px);
+      }
+
+      /* IDE-inspired scrollbar */
       .code-toolbar pre {
         margin: 0 !important;
-        padding: 60px 24px 24px !important; /* Extra padding for header */
+        padding: 52px 24px 24px !important;
         background: transparent !important;
         font-family: "JetBrains Mono", "Fira Code", monospace;
         font-size: 0.95rem;
         line-height: 1.7;
         max-height: 500px;
         overflow-y: auto;
-        scroll-behavior: smooth;
       }
 
-      /* Webkit scrollbar styling (Chrome, Safari, Edge) */
+      /* Modern scrollbar styling */
       .code-toolbar pre::-webkit-scrollbar {
-        width: 8px;
-        height: 8px; /* For horizontal scrolling if needed */
+        width: 14px; /* Slightly wider for better usability */
+        height: 14px;
       }
 
       .code-toolbar pre::-webkit-scrollbar-track {
-        background: transparent;
+        background: #1e1e1e; /* Match code background */
+        border-radius: 0;
       }
 
       .code-toolbar pre::-webkit-scrollbar-thumb {
-        background: rgba(0, 184, 212, 0.2);
-        border-radius: 4px;
-        min-height: 40px; /* Minimum thumb size */
+        background-color: #424242;
+        border: 4px solid #1e1e1e; /* Creates padding effect */
+        border-radius: 7px;
+        min-height: 40px;
       }
 
       .code-toolbar pre::-webkit-scrollbar-thumb:hover {
-        background: rgba(0, 184, 212, 0.3);
-      }
-
-      .code-toolbar pre::-webkit-scrollbar-thumb:active {
-        background: rgba(0, 184, 212, 0.4);
+        background-color: #505050;
       }
 
       .code-toolbar pre::-webkit-scrollbar-corner {
-        background: transparent;
+        background: #1e1e1e;
       }
 
-      /* Firefox scrollbar styling */
+      /* Firefox scrollbar */
       .code-toolbar pre {
         scrollbar-width: thin;
-        scrollbar-color: rgba(0, 184, 212, 0.2) transparent;
+        scrollbar-color: #424242 #1e1e1e;
       }
 
-      /* Line numbers styling */
-      .line-numbers-rows {
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 60px 0 24px; /* Match pre padding */
-      }
-
-      .line-numbers-rows > span:before {
-        color: rgba(255, 255, 255, 0.3);
-      }
-
-      /* Toolbar styling */
+      /* Toolbar positioning */
       .code-toolbar > .toolbar {
         position: absolute;
         top: 8px;
@@ -455,62 +465,11 @@
         z-index: 10;
       }
 
-      /* Button styling */
-      .toolbar-item button {
-        background: rgba(255, 255, 255, 0.05);
-        color: rgba(255, 255, 255, 0.7);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 6px 12px;
-        border-radius: 6px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        transition: all 0.2s ease;
-      }
-
-      .toolbar-item button:hover {
-        background: rgba(0, 184, 212, 0.1);
-        color: #00b8d4;
-        border-color: rgba(0, 184, 212, 0.3);
-        transform: translateY(-1px);
-      }
-
-      /* Expanded state styles */
-      .code-toolbar.expanded {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 90vw;
-        height: 90vh;
-        z-index: 1000;
-      }
-
-      .code-toolbar.expanded pre {
-        height: calc(100% - 60px); /* Account for header */
-        max-height: none;
-      }
-
-      /* Overlay for expanded state */
-      .code-overlay {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.75);
-        z-index: 999;
-      }
-
-      .code-overlay.active {
-        display: block;
-      }
-
-      /* Success state for copy button */
+      /* Success state for copy */
       .toolbar-item button[data-copy-state="copy-success"] {
-        background: rgba(45, 212, 0, 0.1);
-        border-color: rgba(45, 212, 0, 0.3);
-        color: #2dd400;
+        background: #1e4620; /* VS Code-like success color */
+        border-color: #24592e;
+        color: #89d185;
       }
       /* Thought Exercise Container */
       .thought-exercise {
