@@ -131,19 +131,25 @@
   font-weight: bold;
 }
 
-/* Header with emoji */
+/* Updated icon styling */
+.thought-exercise-icon {
+  font-size: 1.5rem;
+  color: #00b8d4; /* Matches your cyan theme */
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 184, 212, 0.1);
+  border-radius: 8px;
+}
+
+/* Enhance the header alignment */
 .thought-exercise-header {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 1rem;
   margin-bottom: 1rem;
-}
-
-/* Emoji styling */
-.thought-exercise-emoji {
-  font-size: 1.5rem;
-  /* Prevent emoji from being selectable with code */
-  user-select: none;
 }
 
 /* Title styling */
