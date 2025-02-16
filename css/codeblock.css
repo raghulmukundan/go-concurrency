@@ -9,6 +9,18 @@
     -4px 0 16px rgba(0, 0, 0, 0.1);
 }
 
+.title-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: #252526;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px 12px 0 0;
+  z-index: 1;
+}
+
 /* macOS-style window controls using ::before */
 .code-toolbar::before {
   content: "";
@@ -19,8 +31,8 @@
   height: 12px;
   background: #ff5f57; /* Close button red */
   border-radius: 50%;
-  box-shadow: 24px 0 0 #febc2e, /* Minimize yellow */ 48px 0 0 #28c840; /* Expand green */
-  z-index: 1; /* Ensure controls stay above the fade effect */
+  box-shadow: 24px 0 0 #febc2e, 48px 0 0 #28c840;
+  z-index: 2; /* Above the title bar */
 }
 
 /* Fade-out effect using ::after */
@@ -30,7 +42,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 20px;
+  height: 10px;
   background: linear-gradient(
     to bottom,
     rgba(26, 31, 44, 0),

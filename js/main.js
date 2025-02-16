@@ -60,6 +60,10 @@ window.addEventListener("load", () => {
           const codeToolbar = document.createElement("div");
           codeToolbar.className = "code-toolbar";
 
+          const titleBar = document.createElement("div");
+          titleBar.className = "title-bar";
+          codeToolbar.appendChild(titleBar);
+          
           const pre = document.createElement("pre");
           const codeElement = document.createElement("code");
 
