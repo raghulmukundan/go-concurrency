@@ -216,12 +216,12 @@ window.addEventListener("load", () => {
                 form.target = "_blank";
                 form.enctype = "application/x-www-form-urlencoded"; // Important for proper submission
 
-                // Create the input with the proper name expected by Go Playground
-                const input = document.createElement("input");
-                input.type = "hidden";
-                input.name = "body"; // Go Playground expects 'body', not 'code'
-                input.value = codeContent;
-                form.appendChild(input);
+                // Create the hidden textarea instead of an input
+                const textarea = document.createElement("textarea");
+                textarea.name = "body"; // Go Playground expects this parameter name
+                textarea.value = codeContent;
+                textarea.style.display = "none"; // Hide it
+                form.appendChild(textarea);
 
                 // Submit the form
                 document.body.appendChild(form);
