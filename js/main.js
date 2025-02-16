@@ -198,25 +198,32 @@ window.addEventListener("load", () => {
         <span>Run in Go Playground</span>
     `;
 
-            // Add playground functionality
             playgroundLink.addEventListener("click", async (e) => {
               e.preventDefault();
 
               try {
-                // Create form for playground submission
+                // Get the code from the code element within this code block
+                // We need to get the actual displayed code, not the original fetched code
+                const codeElement = e.target
+                  .closest(".code-section-wrapper")
+                  .querySelector("code");
+                const codeContent = codeElement.textContent;
+
+                // Create the form with the correct encoding type
                 const form = document.createElement("form");
                 form.method = "POST";
                 form.action = "https://go.dev/play/";
                 form.target = "_blank";
+                form.enctype = "application/x-www-form-urlencoded"; // Important for proper submission
 
-                // Add the code as hidden input
+                // Create the input with the proper name expected by Go Playground
                 const input = document.createElement("input");
                 input.type = "hidden";
-                input.name = "code";
-                input.value = code; // Using the code variable from parent scope
+                input.name = "body"; // Go Playground expects 'body', not 'code'
+                input.value = codeContent;
                 form.appendChild(input);
 
-                // Submit form
+                // Submit the form
                 document.body.appendChild(form);
                 form.submit();
                 document.body.removeChild(form);
