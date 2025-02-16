@@ -188,64 +188,82 @@ window.addEventListener("load", () => {
           // Add the code block to wrapper
           codeWrapper.appendChild(codeToolbar);
 
-          // Add playground link if it's a Go file
+          // Add embedded playground if it's a Go file
           if (languageClass === "go") {
-            const playgroundLink = document.createElement("a");
-            playgroundLink.href = "#";
-            playgroundLink.className = "playground-link";
-            playgroundLink.innerHTML = `
-        <i class="fa-solid fa-play"></i>
-        <span>Run in Go Playground</span>
-    `;
+            // Create execution section container
+            const executionSection = document.createElement("div");
+            executionSection.className = "execution-section";
 
-            playgroundLink.addEventListener("click", async (e) => {
-              e.preventDefault();
+            // Create run button
+            const runButton = document.createElement("button");
+            runButton.className = "run-button";
+            runButton.innerHTML = `
+      <i class="fa-solid fa-play"></i>
+      <span>Run Code</span>
+  `;
 
+            // Create output display area
+            const outputDisplay = document.createElement("div");
+            outputDisplay.className = "output-display";
+            outputDisplay.innerHTML =
+              '<div class="output-placeholder">Click Run to see the output</div>';
+
+            // Add execution handling
+            runButton.addEventListener("click", async () => {
               try {
-                const codeElement = e.target
-                  .closest(".code-section-wrapper")
-                  .querySelector("code");
-                const codeContent = codeElement.textContent;
-                console.log("Code content:", codeContent); // Verify that codeContent is correct
+                // Show loading state
+                outputDisplay.innerHTML =
+                  '<div class="loading">Running code...</div>';
+                runButton.disabled = true;
 
-                // Create the form with the proper attributes
-                const form = document.createElement("form");
-                form.method = "POST";
-                form.action = "https://go.dev/play/";
-                form.target = "_blank";
-                form.enctype = "application/x-www-form-urlencoded";
+                // Get the code from our code element
+                const codeContent = code; // Using the code variable from parent scope
 
-                // Use a textarea to preserve multiline code
-                const textarea = document.createElement("textarea");
-                textarea.name = "body"; // Go Playground expects the code in a field named "body"
-                textarea.value = codeContent;
-                textarea.style.display = "none"; // Hide the textarea
-                form.appendChild(textarea);
+                // Make request to Go Playground API
+                const response = await fetch(
+                  "https://play.golang.org/compile",
+                  {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/x-www-form-urlencoded",
+                    },
+                    body: `version=2&body=${encodeURIComponent(codeContent)}`,
+                  }
+                );
 
-                document.body.appendChild(form);
+                if (!response.ok) {
+                  throw new Error("Compilation failed");
+                }
 
-                // Debug: log the serialized form data
-                const formData = new URLSearchParams(
-                  new FormData(form)
-                ).toString();
-                console.log("Form data:", formData);
+                const result = await response.json();
 
-                form.submit();
-
-                // Delay removal to ensure submission completes (e.g., 500ms)
-                setTimeout(() => {
-                  document.body.removeChild(form);
-                }, 500);
-
-                // (Feedback UI code omitted for brevity)
+                // Display the output
+                if (result.Events && result.Events.length > 0) {
+                  const output = result.Events.map((event) => {
+                    return `<div class="output-line ${event.Kind}">${event.Message}</div>`;
+                  }).join("");
+                  outputDisplay.innerHTML = output;
+                } else {
+                  outputDisplay.innerHTML =
+                    '<div class="no-output">Program ran successfully with no output</div>';
+                }
               } catch (error) {
-                console.error("Error opening playground:", error);
-                // (Error feedback UI code omitted for brevity)
+                outputDisplay.innerHTML = `
+              <div class="error-message">
+                  Error running code: ${error.message}
+              </div>
+          `;
+              } finally {
+                runButton.disabled = false;
               }
             });
 
-            // Add playground link to wrapper
-            codeWrapper.appendChild(playgroundLink);
+            // Assemble the execution section
+            executionSection.appendChild(runButton);
+            executionSection.appendChild(outputDisplay);
+
+            // Add execution section to wrapper
+            codeWrapper.appendChild(executionSection);
           }
           // Clear existing content and add the new code block
           codeContainer.innerHTML = "";
