@@ -30,7 +30,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  height: 40px;
+  height: 20px;
   background: linear-gradient(
     to bottom,
     rgba(26, 31, 44, 0),
@@ -248,7 +248,7 @@
   border-left: 4px solid #00b8d4; /* Cyan accent bar */
   border-radius: 8px;
   padding: 1.5rem;
-  margin: 2rem 0;
+  margin: 1rem 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -256,12 +256,6 @@
 .execution-section {
   background: #1a1f2c; /* Match your site's background */
   border-top: none;
-  /* Instead, use a subtle gradient to create separation */
-  background: linear-gradient(
-    to bottom,
-    rgba(255, 255, 255, 0.02),
-    rgba(26, 31, 44, 1) 10%
-  );
   padding: 1.25rem 0 0.25rem;
   border-radius: 0 0 12px 12px; /* Round only bottom corners */
   /* Remove any margin that might affect alignment */
