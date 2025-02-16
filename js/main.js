@@ -194,6 +194,10 @@ window.addEventListener("load", () => {
             const executionSection = document.createElement("div");
             executionSection.className = "execution-section";
 
+            // Create a container for the run button to help with alignment
+            const buttonContainer = document.createElement("div");
+            buttonContainer.className = "run-button-container";
+
             // Create run button with more subtle styling
             const runButton = document.createElement("button");
             runButton.className = "run-button";
@@ -201,6 +205,9 @@ window.addEventListener("load", () => {
                 <i class="fa-solid fa-play" style="font-size: 0.85rem;"></i>
                 <span>Run Code</span>
                  `;
+
+            // Add button to its container
+            buttonContainer.appendChild(runButton);
 
             // Create output display with improved placeholder
             const outputDisplay = document.createElement("div");
@@ -263,7 +270,7 @@ window.addEventListener("load", () => {
             });
 
             // Assemble the execution section
-            executionSection.appendChild(runButton);
+            executionSection.appendChild(buttonContainer);
             executionSection.appendChild(outputDisplay);
 
             // Add execution section to wrapper

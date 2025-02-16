@@ -9,6 +9,9 @@ func communicatingChannels() {
 	ch := make(chan int)
 	var wg sync.WaitGroup
 
+	// Create a done channel to signal counter completion
+	done := make(chan bool)
+
 	//counter go routine
 	go func() {
 		count := 0
@@ -17,6 +20,7 @@ func communicatingChannels() {
 		}
 
 		fmt.Println("Final Count: ", count)
+		done <- true // Signal that counting is complete
 	}()
 
 	//worker go routine
@@ -30,6 +34,7 @@ func communicatingChannels() {
 
 	wg.Wait()
 	close(ch)
+	<-done // Wait for counter to finish processing
 }
 
 func main() {
