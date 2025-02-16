@@ -9,20 +9,8 @@
     -4px 0 16px rgba(0, 0, 0, 0.1);
 }
 
-/* Header bar styling with title bar appearance */
+/* macOS-style window controls using ::before */
 .code-toolbar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 40px;
-  background: #252526; /* Slightly lighter than main background */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* macOS-style window controls */
-.code-toolbar::after {
   content: "";
   position: absolute;
   top: 14px;
@@ -32,6 +20,27 @@
   background: #ff5f57; /* Close button red */
   border-radius: 50%;
   box-shadow: 24px 0 0 #febc2e, /* Minimize yellow */ 48px 0 0 #28c840; /* Expand green */
+  z-index: 1; /* Ensure controls stay above the fade effect */
+}
+
+/* Fade-out effect using ::after */
+.code-toolbar::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    rgba(26, 31, 44, 0),
+    /* Start fully transparent, using your site's background color */
+      rgba(26, 31, 44, 0.8),
+    /* Gradually increase opacity */ rgba(26, 31, 44, 0.95)
+      /* Almost solid at the bottom */
+  );
+  pointer-events: none;
+  border-radius: 0 0 12px 12px;
 }
 
 /* Code block pre element - main content container */
@@ -253,12 +262,12 @@
     rgba(255, 255, 255, 0.02),
     rgba(26, 31, 44, 1) 10%
   );
-  padding: 1.25rem 0;
+  padding: 1.25rem 0 0.25rem;
   border-radius: 0 0 12px 12px; /* Round only bottom corners */
   /* Remove any margin that might affect alignment */
   margin: 0;
-  /* Add shadow only to bottom to complete the container look */
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow to create depth */
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 /* Run button styling */
