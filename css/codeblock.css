@@ -241,3 +241,17 @@
   margin: 2rem 0;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
+
+/* Success state */
+.playground-link.success {
+  background: rgba(45, 212, 0, 0.1);
+  border-color: rgba(45, 212, 0, 0.3);
+  color: #2dd400;
+}
+
+/* Error state */
+.playground-link.error {
+  background: rgba(255, 69, 58, 0.1);
+  border-color: rgba(255, 69, 58, 0.3);
+  color: #ff453a;
+}

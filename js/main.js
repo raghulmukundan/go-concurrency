@@ -180,9 +180,77 @@ window.addEventListener("load", () => {
           codeElement.className = `language-${languageClass}`;
           codeElement.textContent = code;
 
+          // CREATE WRAPPER AND ADD PLAYGROUND LINK HERE
+          // Create a wrapper to hold both code block and playground link
+          const codeWrapper = document.createElement("div");
+          codeWrapper.className = "code-section-wrapper";
+
+          // Add the code block to wrapper
+          codeWrapper.appendChild(codeToolbar);
+
+          // Add playground link if it's a Go file
+          if (languageClass === "go") {
+            const playgroundLink = document.createElement("a");
+            playgroundLink.href = "#";
+            playgroundLink.className = "playground-link";
+            playgroundLink.innerHTML = `
+        <i class="fa-solid fa-play"></i>
+        <span>Run in Go Playground</span>
+    `;
+
+            // Add playground functionality
+            playgroundLink.addEventListener("click", async (e) => {
+              e.preventDefault();
+
+              try {
+                // Create form for playground submission
+                const form = document.createElement("form");
+                form.method = "POST";
+                form.action = "https://go.dev/play/";
+                form.target = "_blank";
+
+                // Add the code as hidden input
+                const input = document.createElement("input");
+                input.type = "hidden";
+                input.name = "code";
+                input.value = code; // Using the code variable from parent scope
+                form.appendChild(input);
+
+                // Submit form
+                document.body.appendChild(form);
+                form.submit();
+                document.body.removeChild(form);
+
+                // Show success feedback
+                const originalContent = playgroundLink.innerHTML;
+                playgroundLink.innerHTML =
+                  '<i class="fa-solid fa-check"></i><span>Opening Playground</span>';
+                playgroundLink.classList.add("success");
+
+                setTimeout(() => {
+                  playgroundLink.innerHTML = originalContent;
+                  playgroundLink.classList.remove("success");
+                }, 2000);
+              } catch (error) {
+                console.error("Error opening playground:", error);
+                const originalContent = playgroundLink.innerHTML;
+                playgroundLink.innerHTML =
+                  '<i class="fa-solid fa-exclamation-triangle"></i><span>Error Opening Playground</span>';
+                playgroundLink.classList.add("error");
+
+                setTimeout(() => {
+                  playgroundLink.innerHTML = originalContent;
+                  playgroundLink.classList.remove("error");
+                }, 2000);
+              }
+            });
+
+            // Add playground link to wrapper
+            codeWrapper.appendChild(playgroundLink);
+          }
           // Clear existing content and add the new code block
           codeContainer.innerHTML = "";
-          codeContainer.appendChild(codeToolbar);
+          codeContainer.appendChild(codeWrapper);
 
           // Apply Prism highlighting (only for syntax highlighting)
           if (window.Prism) {
