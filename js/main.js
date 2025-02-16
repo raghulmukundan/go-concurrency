@@ -194,19 +194,23 @@ window.addEventListener("load", () => {
             const executionSection = document.createElement("div");
             executionSection.className = "execution-section";
 
-            // Create run button
+            // Create run button with more subtle styling
             const runButton = document.createElement("button");
             runButton.className = "run-button";
             runButton.innerHTML = `
-      <i class="fa-solid fa-play"></i>
-      <span>Run Code</span>
-  `;
+                <i class="fa-solid fa-play" style="font-size: 0.85rem;"></i>
+                <span>Run Code</span>
+                 `;
 
-            // Create output display area
+            // Create output display with improved placeholder
             const outputDisplay = document.createElement("div");
             outputDisplay.className = "output-display";
-            outputDisplay.innerHTML =
-              '<div class="output-placeholder">Click Run to see the output</div>';
+            outputDisplay.innerHTML = `
+                    <div class="output-placeholder">
+                        <i class="fa-regular fa-terminal" style="margin-right: 0.5rem;"></i>
+                        Program output will appear here
+                    </div>
+                `;
 
             // Add execution handling
             runButton.addEventListener("click", async () => {

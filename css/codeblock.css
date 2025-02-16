@@ -2,8 +2,9 @@
 .code-toolbar {
   position: relative;
   background: #1e1e1e; /* VS Code-inspired dark background */
-  border-radius: 12px;
+  border-radius: 12px 12px 0 0 !important; /* Round only top corners */
   overflow: hidden;
+  margin-bottom: 0 !important; /* Remove margin between code and execution section */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 8px rgba(0, 0, 0, 0.1),
     inset 0 0 0 1px rgba(255, 255, 255, 0.05);
 }
@@ -242,57 +243,83 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Execution Section Styling */
+/* Execution section styling */
 .execution-section {
-  padding: 1.5rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background: #252526;
-  margin-top: -1px; /* Prevent double borders */
+  background: #1a1f2c; /* Match your site's background */
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 1.25rem;
+  border-radius: 0 0 12px 12px; /* Round only bottom corners */
 }
 
+/* Run button styling */
 .run-button {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.25rem;
-  background: #00b8d4;
-  color: white;
-  border: none;
+  padding: 0.6rem 1.2rem;
+  background: rgba(0, 184, 212, 0.1); /* Match your site's cyan theme */
+  border: 1px solid rgba(0, 184, 212, 0.3);
   border-radius: 6px;
-  font-size: 0.95rem;
+  color: #00b8d4;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .run-button:hover {
-  background: #00acc1;
+  background: rgba(0, 184, 212, 0.15);
+  border-color: rgba(0, 184, 212, 0.5);
   transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 184, 212, 0.15);
+}
+
+.run-button:active {
+  transform: translateY(0);
 }
 
 .run-button:disabled {
-  opacity: 0.7;
+  opacity: 0.6;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
+/* Output display styling */
 .output-display {
   margin-top: 1rem;
-  padding: 1rem;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 6px;
+  padding: 1.25rem;
+  background: #252935; /* Slightly lighter than the background */
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
   font-family: "JetBrains Mono", monospace;
   font-size: 0.9rem;
-  line-height: 1.5;
-  min-height: 100px;
+  line-height: 1.6;
+  min-height: 80px; /* Reduced from 100px */
 }
 
+/* Output states */
 .output-placeholder {
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.4);
   font-style: italic;
+  font-size: 0.9rem;
 }
 
 .loading {
   color: #00b8d4;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.loading::after {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border: 2px solid #00b8d4;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
 }
 
 .output-line {
@@ -301,20 +328,33 @@
 }
 
 .output-line.stdout {
-  color: #d4d4d4;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .output-line.stderr {
   color: #ff5f57;
+  background: rgba(255, 95, 87, 0.1);
+  padding: 0.5rem;
+  border-radius: 4px;
+  margin: 0.25rem 0;
 }
 
 .error-message {
   color: #ff5f57;
-  padding: 0.5rem;
+  background: rgba(255, 95, 87, 0.1);
+  padding: 0.75rem;
+  border-radius: 4px;
   border-left: 3px solid #ff5f57;
 }
 
 .no-output {
   color: #89d185;
   font-style: italic;
+}
+
+/* Animation for loading spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
