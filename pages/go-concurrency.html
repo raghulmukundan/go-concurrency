@@ -30,7 +30,7 @@
             <i class="fa-solid fa-puzzle-piece"></i>
             -->
       </span>
-      <h4 class="thought-exercise-title">Thought Exercise:</h4>
+      <h4 class="thought-exercise-title">Thought Exercise</h4>
     </div>
     <div class="thought-exercise-content">
       Look at your computer's task manager or activity monitor right now.
@@ -75,7 +75,7 @@
                   <i class="fa-solid fa-laptop-code"></i>
                   -->
             </span>
-            <h4 class="thought-exercise-title">Interactive Exercise:</h4>
+            <h4 class="thought-exercise-title">Interactive Exercise</h4>
           </div>
           <div class="thought-exercise-content">
             Try running this code with different numbers of goroutines. How many
@@ -110,14 +110,15 @@
                   <i class="fa-solid fa-laptop-code"></i>
                   -->
             </span>
-            <h4 class="thought-exercise-title">Interactive Exercise:</h4>
+            <h4 class="thought-exercise-title">Interactive Exercise</h4>
           </div>
           <div class="thought-exercise-content">
             <div class="characteristics">
               <ul>
                 <li>
                   <p>
-                    Run the above code multiple times and notice how <i>count</i>
+                    Run the above code multiple times and notice how
+                    <i>count</i>
                     changes everytime
                   </p>
                 </li>
@@ -147,27 +148,94 @@
           <div class="thought-exercise-header">
             <span class="thought-exercise-icon">
               <i class="fa-solid fa-code"></i>
-              <!-- Alternative options:
-                  <i class="fa-solid fa-terminal"></i>
-                  <i class="fa-solid fa-laptop-code"></i>
-                  -->
             </span>
-            <h4 class="thought-exercise-title">Interactive Exercise:</h4>
+            <h4 class="thought-exercise-title">Interactive Exercise</h4>
           </div>
           <div class="thought-exercise-content">
-            Try running the above code multiple times. How does it differ from the previous
-            example?
+            Try running the above code multiple times. How does it differ from
+            the previous example?
           </div>
-          </div>
+        </div>
       </li>
       <li>
-        <span class="key-term">The Go Runtime Scheduler: Your Personal Assistant</span>
-        <p>Imagine having a personal assistant who knows exactly when to interrupt you for important tasks and when to let you focus. 
-          That's what Go's runtime scheduler does for goroutines!</p>
+        <span class="key-term"
+          >The Go Runtime Scheduler: Your Personal Assistant</span
+        >
+        <p>
+          Imagine having a personal assistant who knows exactly when to
+          interrupt you for important tasks and when to let you focus. That's
+          what Go's runtime scheduler does for goroutines!
+        </p>
+        <p>
+          The Go scheduler is a core part of Go's runtime that manages how
+          goroutines run on your machine's CPU cores. When you create a
+          goroutine using the go keyword, the scheduler is responsible for
+          deciding:
+        </p>
+        <ul>
+          <li>When to start running your goroutine</li>
+          <li>Which CPU core should execute it</li>
+          <li>
+            How long it should run before giving another goroutine a chance
+          </li>
+          <li>
+            What to do when a goroutine is waiting for something (like reading
+            from a channel or making an HTTP request)
+          </li>
+        </ul>
       </li>
     </ul>
   </div>
+  <div class="summary-section">
+    <div class="summary-header">
+      <div class="summary-icon">
+        <!-- If using lucide icons -->
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+          ></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+      </div>
+      <h2 class="summary-title">Summary</h2>
+    </div>
 
+    <div class="summary-content">
+      <p>Core strengths of GO's concurrency model:</p>
+
+      <div class="key-point">
+        Goroutines - Extremely lightweight threads that use only ~2KB of memory,
+        allowing thousands or even millions to run simultaneously
+      </div>
+
+      <div class="key-point">
+        CSP Model (Communicating Sequential Processes) - Uses message passing
+        through channels instead of shared memory, making concurrent programming
+        safer and more intuitive
+      </div>
+
+      <div class="key-point">
+        Go Runtime Scheduler - Automatically manages and distributes goroutines
+        across available CPU cores
+      </div>
+      <div class="key-point">
+        This is what makes concurrent programming in Go feel so natural - you
+        can focus on writing your concurrent logic using goroutines, and the
+        scheduler handles all the complex details of making it run efficiently
+        on your hardware.
+      </div>
+    </div>
+  </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
     <button class="nav-button" onclick="navigate('next')">Next</button>
