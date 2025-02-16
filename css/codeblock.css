@@ -247,10 +247,10 @@
 .execution-section {
   background: #1a1f2c; /* Match your site's background */
   border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding: 1.25rem 24px;
+  padding: 1.25rem 0;
   border-radius: 0 0 12px 12px; /* Round only bottom corners */
-   /* Remove any margin that might affect alignment */
-   margin: 0;
+  /* Remove any margin that might affect alignment */
+  margin: 0;
 }
 
 /* Run button styling */
@@ -272,8 +272,8 @@
 /* Run button container */
 .run-button-container {
   /* This ensures the button aligns with code */
-  padding-left: 0;  /* Remove any default padding */
-  margin: 0;  /* Remove any default margin */
+  padding-left: 0; /* Remove any default padding */
+  margin: 0; /* Remove any default margin */
 }
 
 .run-button:hover {
@@ -305,12 +305,12 @@
   font-size: 0.9rem;
   line-height: 1.6;
   min-height: 80px;
-  max-height: 300px; /* Set maximum height to trigger scrollbar */
+  max-height: 200px; /* Set maximum height to trigger scrollbar */
   overflow-y: auto; /* Enable vertical scrolling */
   overflow-x: hidden; /* Hide horizontal scrollbar */
   /* Width calculations to match code block exactly */
-  width: 100%;  /* Take full width of parent */
-  box-sizing: border-box;  /* Include padding in width calculation */
+  width: 100%; /* Take full width of parent */
+  box-sizing: border-box; /* Include padding in width calculation */
 }
 
 /* Webkit scrollbar styling (Chrome, Safari, Edge) */
