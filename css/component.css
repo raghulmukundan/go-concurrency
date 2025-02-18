@@ -174,3 +174,38 @@
   padding-left: 1.25rem;
   border-left: 2px solid rgba(0, 184, 212, 0.3);
 }
+
+/* List container styling */
+.thought-exercise-content ul {
+  list-style: none; /* Remove default bullets */
+  padding: 0;
+  margin: 1rem 0;
+}
+
+/* List item styling */
+.thought-exercise-content li {
+  position: relative;
+  padding-left: 1.5rem; /* Space for custom bullet */
+  margin: 0.75rem 0;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+}
+
+/* Custom bullet points using pseudo-element */
+.thought-exercise-content li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em; /* Vertically center with text */
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background-color: #00b8d4; /* Match your cyan theme */
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(0, 184, 212, 0.1); /* Subtle glow effect */
+}
+
+/* Style for nested lists if needed */
+.thought-exercise-content ul ul {
+  margin: 0.5rem 0 0.5rem 1rem;
+}
