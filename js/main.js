@@ -63,7 +63,7 @@ window.addEventListener("load", () => {
           const titleBar = document.createElement("div");
           titleBar.className = "title-bar";
           codeToolbar.appendChild(titleBar);
-          
+
           const pre = document.createElement("pre");
           const codeElement = document.createElement("code");
 
@@ -193,7 +193,10 @@ window.addEventListener("load", () => {
           codeWrapper.appendChild(codeToolbar);
 
           // Add embedded playground if it's a Go file
-          if (languageClass === "go") {
+          if (
+            languageClass === "go" &&
+            !codeContainer.classList.contains("norun")
+          ) {
             // Create execution section container
             const executionSection = document.createElement("div");
             executionSection.className = "execution-section";
