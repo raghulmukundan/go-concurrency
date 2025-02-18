@@ -137,7 +137,7 @@
         <span class="key-term">Simplicity:</span> Go's goroutines and channels
         are easy to understand and use. It's like having a simple recipe that
         anyone can follow.
-        <div class="code-section">
+        <div class="code-section" style="margin: 1em 0 0 0">
           <div
             id="goroutine"
             class="code-container norun"
@@ -150,11 +150,35 @@
         make it easy to accidentally cause problems when chefs (threads) share
         kitchen tools (resources), Go encourages a safer approach through
         channels:
+        <div class="code-section" style="margin: 1em 0 0 0">
+          <div
+            id="channels"
+            class="code-container norun"
+            data-code-path="govstherest/channels.go"
+          ></div>
+        </div>
       </li>
       <li>
         <span class="key-term">Balanced Approach:</span> Go has a friendly
         community and lots of resources to help you learn. It's like having a
         supportive team in the kitchen.
+        <ul>
+          <li>
+            Less rigid than Rust (which has strict rules about resource sharing)
+          </li>
+          <li>
+            More structured than C++ (which gives you lots of freedom but also
+            rope to hang yourself)
+          </li>
+          <li>
+            Simpler than Java (which requires more ceremony to do concurrent
+            operations)
+          </li>
+          <li>
+            More mainstream than Erlang (while borrowing its good ideas about
+            message passing)
+          </li>
+        </ul>
       </li>
     </ul>
   </div>
