@@ -35,9 +35,7 @@
   <div class="characteristics">
     <ul>
       <li>
-        <p>
-            Creates a new goroutine data structure
-        </p>
+        <p>Creates a new goroutine data structure</p>
       </li>
       <li>
         <p>Allocates a small initial stack (only 2KB!)</p>
@@ -47,6 +45,31 @@
       </li>
       <li>
         <p>Schedules the goroutine for execution</p>
+      </li>
+    </ul>
+  </div>
+  <h2>What Is a Goroutine Internally?</h2>
+  <div class="characteristics">
+    <ul>
+      <li>
+        <span class="key-term">Goroutine Structure:</span>
+        <p>
+          Internally, each goroutine is represented by a small runtime data
+          structure (often referred to as a “g” struct). This structure
+          contains:
+        </p>
+        <div class="characteristics">
+          <ul>
+            <li>
+              A pointer to its stack, which starts at a very small size
+              (typically 2–4KB).
+            </li>
+            <li>
+              Information about its current state (running, waiting, etc.).
+            </li>
+            <li>A pointer to the function it’s running, and other metadata.</li>
+          </ul>
+        </div>
       </li>
     </ul>
   </div>
