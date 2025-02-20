@@ -133,15 +133,16 @@
 
 /* Updated icon styling */
 .thought-exercise-icon {
-  font-size: 1.5rem;
-  color: #00b8d4; /* Matches your cyan theme */
-  width: 40px;
-  height: 40px;
+  background: rgba(0, 184, 212, 0.1);
+  padding: 0.75rem;
+  border-radius: 10px;
+  color: #00b8d4;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0, 184, 212, 0.1);
-  border-radius: 8px;
+  font-size: 1.25rem;
+  /* Optional: add subtle glow effect */
+  box-shadow: 0 0 20px rgba(0, 184, 212, 0.1);
 }
 
 /* Enhance the header alignment */
@@ -149,14 +150,14 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 /* Title styling */
 .thought-exercise-title {
+  color: #00b8d4;
   font-size: 1.25rem;
   font-weight: 600;
-  color: #00b8d4;
   margin: 0;
 }
 
@@ -176,17 +177,17 @@
 
 /* List container styling */
 .thought-exercise-content ul {
-  list-style: none; /* Remove default bullets */
+  list-style: none;
   padding: 0;
-  margin: 1rem 0;
+  margin: 0;
 }
 
 /* List item styling */
 .thought-exercise-content li {
   position: relative;
-  padding-left: 1.5rem; /* Space for custom bullet */
-  margin: 0.75rem 0;
-  color: rgba(255, 255, 255, 0.85);
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
 }
 
@@ -195,13 +196,13 @@
   content: "";
   position: absolute;
   left: 0;
-  top: 0.7em; /* Vertically center with text */
+  top: 0.7em;
   transform: translateY(-50%);
   width: 6px;
   height: 6px;
-  background-color: #00b8d4; /* Match your cyan theme */
+  background-color: #00b8d4;
   border-radius: 50%;
-  box-shadow: 0 0 0 2px rgba(0, 184, 212, 0.1); /* Subtle glow effect */
+  box-shadow: 0 0 0 2px rgba(0, 184, 212, 0.1);
 }
 
 /* Style for nested lists if needed */
