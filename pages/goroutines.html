@@ -71,7 +71,29 @@
           </ul>
         </div>
       </li>
+      <li>
+        <span class="key-term">Dynamic Stack Growth:</span> Unlike OS threads
+        that come with a fixed, often large, stack size, goroutines start with a
+        small stack. If a goroutine needs more space (for example, due to deep
+        recursion or large local variables), the Go runtime automatically
+        allocates a bigger stack and copies over the data.
+      </li>
     </ul>
+  </div>
+  <div class="thought-exercise">
+    <div class="thought-exercise-header">
+      <span class="thought-exercise-icon">
+        <i class="fa-solid fa-brain"></i>
+      </span>
+      <h4 class="thought-exercise-title">Thought Exercise</h4>
+    </div>
+    <div class="thought-exercise-content">
+      What happens if a goroutine exceeds its initial stack space?
+      <div class="thought-exercise-questions">
+        The Go runtime grows its stack dynamically to accommodate the extra
+        space.
+      </div>
+    </div>
   </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
