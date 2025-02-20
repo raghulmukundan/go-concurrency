@@ -1,21 +1,34 @@
 <div class="section">
-    <h1>Goroutine Internals and Execution Model</h1>
+  <h1>Goroutine Internals and Execution Model</h1>
 
-    <p>What Really Happens When We Type <span class="go-keyword">Go</span>?</p>
-    
-    <h2>Basic Example</h2>
-    <pre><code class="language-go line-numbers">
-func main() {
-go sayHello("World")
-time.Sleep(100 * time.Millisecond)
-}
-
-func sayHello(name string) {
-fmt.Printf("Hello, %s!\n", name)
-}</code></pre>
-
-    <div class="navigation-buttons">
-        <button class="nav-button" onclick="navigate('prev')">Previous</button>
-        <button class="nav-button" onclick="navigate('next')">Next</button>
+  <p>What Really Happens When We Type <span class="go-keyword">go</span> ?</p>
+  <p>
+    Remember our breakfast-making program? We simply added the
+    <span class="go-keyword">go</span> keyword and magic happened. But what's
+    really going on under the hood? Let's peek behind the curtain!
+  </p>
+  <div class="code-section" style="margin: 1em 0 0 0">
+    <div
+      id="goroutine"
+      class="code-container norun"
+      data-code-path="govstherest/goroutine.go"
+    ></div>
+  </div>
+  <div class="thought-exercise">
+    <div class="thought-exercise-header">
+      <span class="thought-exercise-icon">
+        <i class="fa-solid fa-bolt"></i>
+      </span>
+      <h4 class="thought-exercise-title">Quick Question</h4>
     </div>
-</section>
+    <div class="thought-exercise-content">
+      Before we dive deeper, what do you think happens first when Go sees the
+      <span class="go-keyword">gFo</span>
+      keyword? Take a moment to write down your guess!
+    </div>
+  </div>
+  <div class="navigation-buttons">
+    <button class="nav-button" onclick="navigate('prev')">Previous</button>
+    <button class="nav-button" onclick="navigate('next')">Next</button>
+  </div>
+</div>
