@@ -23,9 +23,32 @@
     </div>
     <div class="thought-exercise-content">
       Before we dive deeper, what do you think happens first when Go sees the
-      <span class="go-keyword">gFo</span>
+      <span class="go-keyword">go</span>
       keyword? Take a moment to write down your guess!
     </div>
+  </div>
+  <h2>The Birth of a Goroutine</h2>
+  <p>
+    When you type <span class="go-keyword">go</span> before a function call, Go
+    performs several steps:
+  </p>
+  <div class="characteristics">
+    <ul>
+      <li>
+        <p>
+            Creates a new goroutine data structure
+        </p>
+      </li>
+      <li>
+        <p>Allocates a small initial stack (only 2KB!)</p>
+      </li>
+      <li>
+        <p>Records information about where to start executing</p>
+      </li>
+      <li>
+        <p>Schedules the goroutine for execution</p>
+      </li>
+    </ul>
   </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
