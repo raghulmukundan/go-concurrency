@@ -446,3 +446,16 @@
     transform: rotate(360deg);
   }
 }
+
+/* Styling for Go keyword */
+.go-keyword {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.1rem 0.5rem;
+  background: rgba(0, 184, 212, 0.1);  /* Very subtle cyan background */
+  border: 1px solid rgba(0, 184, 212, 0.3);  /* Subtle cyan border */
+  border-radius: 4px;
+  color: #00b8d4;  /* Cyan text color to match your theme */
+  font-family: 'JetBrains Mono', monospace;  /* Using your code font */
+  font-size: 0.9em;  /* Slightly smaller than surrounding text */
+}
