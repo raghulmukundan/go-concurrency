@@ -1,6 +1,6 @@
 /* Key terms (like "Task Interleaving:") */
 .characteristics .key-term {
-  color: #2de2e6; /* A slightly softer cyan that's easier on the eyes */
+  color: #40E0D0; /* A slightly softer cyan that's easier on the eyes */
   font-weight: 500;
   font-size: 1.1rem;
 }
@@ -30,7 +30,7 @@
 /* Custom bullet points using pseudo-element */
 .characteristics li::before {
   content: "•";
-  color: #00b8d4; /* Your cyan accent color */
+  color: #40E0D0; /* Your cyan accent color */
   position: absolute;
   left: 0;
   font-size: 1.2em;
@@ -38,7 +38,7 @@
 
 /* Bold text for term definitions */
 .characteristics li strong {
-  color: #00b8d4;
+  color: #40E0D0;
   font-weight: 500;
   margin-right: 0.5rem;
 }
