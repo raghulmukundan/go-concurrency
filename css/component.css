@@ -131,12 +131,23 @@
   font-weight: bold;
 }
 
+/* Thought Exercise Container */
+.thought-exercise {
+  background: rgba(0, 184, 212, 0.05); /* Very subtle cyan background */
+  border-left: 4px solid #00b8d4;
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
 /* Updated icon styling */
 .thought-exercise-icon {
   background: rgba(0, 184, 212, 0.1);
   padding: 0.75rem;
   border-radius: 10px;
-  color: #00b8d4;
+  color: #40E0D0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -155,7 +166,7 @@
 
 /* Title styling */
 .thought-exercise-title {
-  color: #00b8d4;
+  color: #40E0D0;
   font-size: 1.25rem;
   font-weight: 600;
   margin: 0;
