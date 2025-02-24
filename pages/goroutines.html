@@ -72,11 +72,14 @@
         </div>
       </li>
       <li>
-        <span class="key-term">Dynamic Stack Growth:</span> <p> Unlike OS threads
-        that come with a fixed, often large, stack size, goroutines start with a
-        small stack. If a goroutine needs more space (for example, due to deep
-        recursion or large local variables), the Go runtime automatically
-        allocates a bigger stack and copies over the data.</p>
+        <span class="key-term">Dynamic Stack Growth:</span>
+        <p>
+          Unlike OS threads that come with a fixed, often large, stack size,
+          goroutines start with a small stack. If a goroutine needs more space
+          (for example, due to deep recursion or large local variables), the Go
+          runtime automatically allocates a bigger stack and copies over the
+          data.
+        </p>
       </li>
     </ul>
   </div>
@@ -103,6 +106,29 @@
       class="code-container"
       data-code-path="goroutine/gosched.go"
     ></div>
+  </div>
+  <div class="thought-exercise">
+    <div class="thought-exercise-header">
+      <span class="thought-exercise-icon">
+        <i class="fa-solid fa-code"></i>
+      </span>
+      <h4 class="thought-exercise-title">Interactive Exercise</h4>
+    </div>
+    <div class="thought-exercise-content">
+      <div class="characteristics">
+        <ul>
+          <li>
+            Run this program multiple times. Do you always see all the goroutine messages?
+          </li>
+          <li>
+            Try adding a small sleep after checking the goroutine count. What changes?
+          </li>
+          <li>
+            What happens if you remove the runtime.Gosched()?
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>

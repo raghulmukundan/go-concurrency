@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"runtime"
-	"time"
 )
 
 func createGoroutine() {
@@ -17,8 +16,8 @@ func createGoroutine() {
 	}
 
 	fmt.Printf("After creation: %d\n", runtime.NumGoroutine())
-	time.Sleep(20 * time.Second)
-	runtime.Gosched()
+
+	runtime.Gosched() //give other goroutines a chance to run
 }
 
 func main() {
