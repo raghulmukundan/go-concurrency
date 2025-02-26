@@ -1,5 +1,5 @@
 <div class="section">
-  <h1>Goroutine Internals and Execution Model</h1>
+  <h1>Goroutine Internals</h1>
 
   <p>What Really Happens When We Type <span class="go-keyword">go</span> ?</p>
   <p>
@@ -146,6 +146,7 @@
       </li>
     </ul>
   </div>
+  <p>A simple example to demonstrate go stacks</p>
   <div class="code-section">
     <div
       id="goroutine"
@@ -164,6 +165,56 @@
       If each goroutine uses a 2KB stack, and we create 100,000 goroutines, how
       much memory would we expect them to use? Now, try the same calculation
       with traditional 1MB thread stacks - see the difference?
+    </div>
+  </div>
+  <div class="summary-section">
+    <div class="summary-header">
+      <div class="summary-icon">
+        <!-- If using lucide icons -->
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+          ></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+      </div>
+      <h2 class="summary-title">Summary</h2>
+    </div>
+
+    <div class="summary-content">
+      <p>When you use the <span class="go-keyword">go</span> keyword:</p>
+
+      <div class="key-point">
+        A new goroutine structure is created with a tiny 2KB initial stack
+      </div>
+
+      <div class="key-point">
+        This is dramatically smaller than traditional threads (1MB+)
+      </div>
+
+      <div class="key-point">The goroutine is scheduled for execution</div>
+      <p>Key Advantages:</p>
+      <div class="key-point">
+        Memory efficiency allows creating thousands of goroutines
+      </div>
+      <div class="key-point">Stacks grow dynamically as needed</div>
+      <div class="key-point">
+        100,000 goroutines use ~200MB vs ~100GB for threads
+      </div>
+      <p>
+        Each goroutine contains stack information, execution state, and function
+        metadata that the Go runtime manages automatically.
+      </p>
     </div>
   </div>
   <div class="navigation-buttons">
