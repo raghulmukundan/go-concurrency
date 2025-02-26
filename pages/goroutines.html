@@ -118,16 +118,52 @@
       <div class="characteristics">
         <ul>
           <li>
-            Run this program multiple times. Do you always see all the goroutine messages?
+            Run this program multiple times. Do you always see all the goroutine
+            messages?
           </li>
           <li>
-            Try adding a small sleep after checking the goroutine count. What changes?
+            Try adding a small sleep after checking the goroutine count. What
+            changes?
           </li>
           <li>
-            What happens if you remove the <span style="color: #00B8D4;">runtime.Gosched()</span>?
+            What happens if you remove the
+            <span style="color: #00b8d4">runtime.Gosched()</span>?
           </li>
         </ul>
       </div>
+    </div>
+  </div>
+  <h3>The Goroutine's Memory Model</h3>
+  <p>
+    Each goroutine starts with a tiny 2KB stack. This is fascinating because:
+  </p>
+  <div class="characteristics">
+    <ul>
+      <li>A typical thread starts with 1MB or more</li>
+      <li>
+        Goroutines can create thousands of stacks in the same space as a few
+        threads
+      </li>
+    </ul>
+  </div>
+  <div class="code-section">
+    <div
+      id="goroutine"
+      class="code-container"
+      data-code-path="goroutine/gomemorymodel.go"
+    ></div>
+  </div>
+  <div class="thought-exercise">
+    <div class="thought-exercise-header">
+      <span class="thought-exercise-icon">
+        <i class="fa-solid fa-brain"></i>
+      </span>
+      <h4 class="thought-exercise-title">Thought Exercise</h4>
+    </div>
+    <div class="thought-exercise-content">
+      If each goroutine uses a 2KB stack, and we create 100,000 goroutines, how
+      much memory would we expect them to use? Now, try the same calculation
+      with traditional 1MB thread stacks - see the difference?
     </div>
   </div>
   <div class="navigation-buttons">
