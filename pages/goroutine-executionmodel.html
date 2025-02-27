@@ -1,6 +1,6 @@
 <div class="section">
   <h1>Goroutine Execution Model</h1>
-  <h3>Introduction to Goroutine Scheduling</h3>
+  <h2>Introduction to Goroutine Scheduling</h2>
   <p>
     When you launch a goroutine with the
     <span class="go-keyword">go</span> keyword, you're creating a lightweight
@@ -29,6 +29,36 @@
         continuing.
       </div>
     </div>
+  </div>
+
+  <h2>Cooperative vs. Preemptive Scheduling</h2>
+  <p>
+    Goroutine scheduling has evolved over time, combining two primary
+    approaches:
+  </p>
+  <h3>Cooperative Scheduling</h3>
+  <p>
+    In cooperative scheduling, a goroutine runs until it voluntarily yields
+    control. Think of it as polite conversation - you speak until you decide to
+    let someone else talk.
+  </p>
+  <div class="code-section" style="margin: 1em 0 0 0">
+    <div
+      id="goroutine-execution-model"
+      class="code-container"
+      data-code-path="goroutine-execution/cooperative-scheduling.go"
+    ></div>
+  </div>
+  <div class="characteristics">
+    <h2>When does a goroutine cooperatively yield?</h2>
+    <ul>
+      <li>Channel operations</li>
+      <li>Network calls</li>
+      <li>File I/O</li>
+      <li>System calls</li>
+      <li>Calling time.Sleep()</li>
+      <li>Calling runtime.Gosched()</li>
+    </ul>
   </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
