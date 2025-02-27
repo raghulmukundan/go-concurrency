@@ -459,3 +459,14 @@
   filter: brightness(1.1);
   transition: filter 0.2s ease;
 }
+
+.code-inline {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #00B8D4;  /* Cyan to match your theme */
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9em;
+}
