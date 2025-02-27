@@ -1,5 +1,35 @@
 <div class="section">
   <h1>Goroutine Execution Model</h1>
+  <h3>Introduction to Goroutine Scheduling</h3>
+  <p>
+    When you launch a goroutine with the
+    <span class="go-keyword">go</span> keyword, you're creating a lightweight
+    unit of execution. But how does the Go runtime decide when each goroutine
+    gets to run? This is where Go's scheduling model comes in.
+  </p>
+  <div class="code-section" style="margin: 1em 0 0 0">
+    <div
+      id="goroutine-execution-model"
+      class="code-container"
+      data-code-path="goroutine-execution/goroutine-sample.go"
+    ></div>
+  </div>
+  <div class="thought-exercise">
+    <div class="thought-exercise-header">
+      <span class="thought-exercise-icon">
+        <i class="fa-solid fa-brain"></i>
+      </span>
+      <h4 class="thought-exercise-title">Thought Exercise</h4>
+    </div>
+    <div class="thought-exercise-content">
+      What Happens Behind the Scenes?
+      <div class="thought-exercise-questions">
+        Consider what might happen if you run 10,000 goroutines but only have 8
+        CPU cores. How might Go handle this situation? Think about this before
+        continuing.
+      </div>
+    </div>
+  </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
     <button class="nav-button" onclick="navigate('next')">Next</button>
