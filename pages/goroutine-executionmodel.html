@@ -49,16 +49,19 @@
       data-code-path="goroutine-execution/cooperative-scheduling.go"
     ></div>
   </div>
-  <div class="characteristics">
-    <h2>When does a goroutine cooperatively yield?</h2>
-    <ul>
-      <li>Channel operations</li>
-      <li>Network calls</li>
-      <li>File I/O</li>
-      <li>System calls</li>
-      <li>Calling <span class="code-inline">time.Sleep()</span></li>
-      <li>Calling <span class="code-inline">runtime.Gosched()</span></li>
-    </ul>
+
+  <h3>Preemptive Scheduling</h3>
+  <p>
+    With preemptive scheduling, the Go runtime can interrupt a goroutine's
+    execution even if it doesn't yield. This is like a teacher calling on a
+    different student even if the current one isn't finished speaking.
+  </p>
+  <div class="code-section" style="margin: 1em 0 0 0">
+    <div
+      id="goroutine-execution-model"
+      class="code-container"
+      data-code-path="goroutine-execution/preemptive-scheduling.go"
+    ></div>
   </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
