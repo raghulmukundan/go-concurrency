@@ -49,6 +49,23 @@
       data-code-path="goroutine-execution/cooperative-scheduling.go"
     ></div>
   </div>
+  <div class="thought-exercise">
+    <div class="thought-exercise-header">
+      <span class="thought-exercise-icon">
+        <i class="fa-solid fa-brain"></i>
+      </span>
+      <h4 class="thought-exercise-title">Thought Exercise</h4>
+    </div>
+    <div class="thought-exercise-content">
+      What is <span class="code-inline">runtime.Gosched()</span> doing in the
+      above code?
+      <div class="thought-exercise-questions">
+        The goroutine with <span class="code-inline">runtime.Gosched()</span> is
+        stopping its execution and voluntarily giving away control so that other
+        goroutines can run. This is cooperative scheduling in action. space.
+      </div>
+    </div>
+  </div>
 
   <h3>Preemptive Scheduling</h3>
   <p>
@@ -62,6 +79,24 @@
       class="code-container"
       data-code-path="goroutine-execution/preemptive-scheduling.go"
     ></div>
+  </div>
+  <div class="thought-exercise">
+    <div class="thought-exercise-header">
+      <span class="thought-exercise-icon">
+        <i class="fa-solid fa-brain"></i>
+      </span>
+      <h4 class="thought-exercise-title">Thought Exercise</h4>
+    </div>
+    <div class="thought-exercise-content">
+      Run the above code multiple times. What do you notice?
+      <div class="thought-exercise-questions">
+        Even without a call to
+        <span class="code-inline">runtime.Gosched()</span>, the goroutine with
+        the CPU bound task will yield control to other goroutines. This is
+        Preemptive scheduling in action. In the above code the for loop that
+        runs for 1_000_000_000 iterations is a CPU bound task.
+      </div>
+    </div>
   </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
