@@ -62,7 +62,7 @@
       <div class="thought-exercise-questions">
         The goroutine with <span class="code-inline">runtime.Gosched()</span> is
         stopping its execution and voluntarily giving away control so that other
-        goroutines can run. This is cooperative scheduling in action. space.
+        goroutines can run. This is cooperative scheduling in action.
       </div>
     </div>
   </div>
@@ -97,6 +97,42 @@
         runs for 1_000_000_000 iterations is a CPU bound task.
       </div>
     </div>
+  </div>
+  <h3>Problem with pure cooperative scheduling</h3>
+  <p>
+    Cooperative scheduling works great when goroutines play nice and yield
+    often. But what about a goroutine that doesn’t? Imagine this:
+  </p>
+  <div class="code-section" style="margin: 1em 0 0 0">
+    <div
+      id="goroutine-execution-model"
+      class="code-container norun"
+      data-code-path="goroutine-execution/goroutine-problem.go"
+    ></div>
+  </div>
+  <p>
+    In older versions of Go (pre-1.14), this could be a problem. If a goroutine
+    enters a tight loop with no yield points—like no function calls or blocking
+    operations—it could hog the runtime indefinitely. Since the scheduler relies
+    on cooperation, it wouldn’t get a chance to switch to other goroutines,
+    including the main one. Your program might never print "Will I ever print?"
+    because the infiniteLoop goroutine never yields.
+  </p>
+  <h3>The Evolution of Go's Scheduling Model</h3>
+  <div class="characteristics">
+    <p>Go's scheduling model has evolved significantly:</p>
+    <ul>
+      <li>
+        <span class="key-term">Go 1.0-1.1:</span> Purely cooperative scheduling
+      </li>
+      <li>
+        <span class="key-term">Go 1.2-1.13:</span> Cooperative with limited
+        preemption at function calls
+      </li>
+      <li>
+        <span class="key-term">Go 1.14+:</span> Asynchronous preemption added
+      </li>
+    </ul>
   </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
