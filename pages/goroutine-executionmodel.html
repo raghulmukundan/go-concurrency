@@ -134,6 +134,38 @@
       </li>
     </ul>
   </div>
+  <h3>Preemption in modern Go</h3>
+  <p>
+    To address limitation with Cooperative scheduling, Go introduced limited
+    preemption starting in Go 1.14 (and improved it in later versions). Now, the
+    runtime can interrupt long-running goroutines even if they don’t yield
+    voluntarily. Here’s how it works:
+  </p>
+  <div class="characteristics">
+    <p>Go's scheduling model has evolved significantly:</p>
+    <ul>
+      <li>
+        <span class="key-term">Safe Points:</span> The compiler inserts “safe
+        points” in the code—places where it’s okay to pause execution without
+        breaking anything. These often align with function calls or loop
+        iterations.
+      </li>
+      <li>
+        <span class="key-term">Signal-Based Preemption: </span> The runtime
+        sends a signal to the thread running the goroutine. If the goroutine has
+        been running too long (e.g., exceeding a time threshold), the runtime
+        can pause it at a safe point and switch to another goroutine.
+      </li>
+    </ul>
+
+    <p>
+      This isn’t full preemption like OS threads—it’s still lighter and more
+      controlled—but it ensures that no single goroutine can starve the system.
+      For example, in modern Go, the infiniteLoop example above wouldn’t
+      completely block the main goroutine forever. The runtime would eventually
+      preempt it.
+    </p>
+  </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
     <button class="nav-button" onclick="navigate('next')">Next</button>
