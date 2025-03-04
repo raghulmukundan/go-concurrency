@@ -172,8 +172,8 @@
       <li>
         <span class="key-term">Runtime Monitoring via Sysmon:</span>
         <p>
-          The Go runtime includes a system monitor thread called <i>sysmon</i>, which
-          runs in the background. Sysmon periodically checks the state of
+          The Go runtime includes a system monitor thread called <i>sysmon</i>,
+          which runs in the background. Sysmon periodically checks the state of
           goroutines—roughly every 10 milliseconds—looking for ones that have
           run too long without yielding. It doesn’t use a standalone timer to
           trigger preemption; instead, it’s a dynamic watchdog that decides when
@@ -181,13 +181,37 @@
         </p>
       </li>
       <li>
-        <span class="key-term">Signal-Based Preemption: </span> The runtime
-        sends a signal to the thread running the goroutine. If the goroutine has
-        been running too long (e.g., exceeding a time threshold), the runtime
-        can pause it at a safe point and switch to another goroutine.
+        <span class="key-term">Signal-Based Preemption: </span>
+        <p>
+          When sysmon identifies a goroutine that’s run too long (e.g., >10ms
+          without yielding), it sends a
+          <span class="code-inline">SIGURG</span> signal to the OS thread
+          running that goroutine. A signal handler in the runtime catches this
+          signal and prepares to pause the goroutine. This isn’t an immediate
+          stop—it’s a polite nudge to yield soon.
+        </p>
+      </li>
+      <li>
+        <span class="key-term">Safe Points: </span>
+        <p>
+          Preemption doesn’t happen instantly—it waits for the goroutine to
+          reach a safe point. These are specific spots in the code, inserted by
+          the compiler, where pausing won’t corrupt the goroutine’s state (e.g.,
+          between function calls or at loop boundaries). Once the signal handler
+          catches the <span class="code-inline">SIGURG</span>, it sets a flag,
+          and the goroutine pauses at the next safe point, letting the scheduler
+          switch to another goroutine.
+        </p>
       </li>
     </ul>
   </div>
+  <h3>Why Preemption Matters</h3>
+  <p>
+    This mechanism blends cooperation with intervention. It keeps Go’s
+    lightweight concurrency intact while preventing scheduler starvation. In Go
+    1.13 and earlier, a tight loop could block everything; now, sysmon and
+    signals ensure fairness without the heavy overhead of OS thread preemption.
+  </p>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
     <button class="nav-button" onclick="navigate('next')">Next</button>
