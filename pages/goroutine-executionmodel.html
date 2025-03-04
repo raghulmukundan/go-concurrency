@@ -212,6 +212,47 @@
     1.13 and earlier, a tight loop could block everything; now, sysmon and
     signals ensure fairness without the heavy overhead of OS thread preemption.
   </p>
+  <div class="summary-section">
+    <div class="summary-header">
+      <div class="summary-icon">
+        <!-- If using lucide icons -->
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+          ></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+      </div>
+      <h2 class="summary-title">Summary</h2>
+    </div>
+
+    <div class="summary-content">
+      <p>
+        Go's scheduler employs a hybrid approach combining cooperative and
+        preemptive scheduling. In cooperative scheduling, goroutines voluntarily
+        yield control. With preemptive scheduling, the runtime can interrupt
+        long-running goroutines even without explicit yields.
+      </p>
+      <p>
+        Modern Go uses a system monitor (sysmon) that periodically checks for
+        goroutines running too long without yielding. When identified, it sends
+        a <span class="code-inline">SIGURG</span> signal to pause the goroutine
+        at the next safe point. This balanced approach prevents any single
+        goroutine from monopolizing system resources while maintaining Go's
+        lightweight concurrency model.
+      </p>
+    </div>
+  </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
     <button class="nav-button" onclick="navigate('next')">Next</button>
