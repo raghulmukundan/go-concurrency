@@ -1,5 +1,20 @@
 <div class="section">
   <h1>Cooperative Scheduling in Go</h1>
+  <p>
+    Goroutines in Go rely on a cooperative scheduling model, a cornerstone of
+    their execution efficiency. Unlike preemptive scheduling, where the
+    operating system forcibly interrupts threads, cooperative scheduling means a
+    goroutine keeps running until it voluntarily yields control to the
+    scheduler. This cooperation keeps context switching lightweight—often just
+    hundreds of nanoseconds compared to microseconds for OS threads.
+  </p>
+  <p>
+    Yield points are built into the runtime and occur naturally at specific
+    moments in your code, allowing the scheduler to pause one goroutine and run
+    another. Let's explore the key places where this happens, with examples and
+    exercises to bring it to life.
+  </p>
+  <h2>Key Yield Points</h2>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
     <button class="nav-button" onclick="navigate('next')">Next</button>
