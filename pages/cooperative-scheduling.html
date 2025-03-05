@@ -41,6 +41,15 @@
       switch.
     </p>
   </div>
+  <h3>Blocking Operations</h3>
+  <p>
+    Operations that inherently block—like reading from or writing to a channel
+    (<span class="code-inline"><-ch</span>), locking a mutex, or calling
+    <span class="code-inline">time.Sleep()</span>—cause the goroutine to yield.
+    When a goroutine can't proceed (e.g., waiting for a channel receiver), the
+    runtime detects this and schedules another runnable goroutine. This includes
+    network calls or file I/O, which block on underlying system operations.
+  </p>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
     <button class="nav-button" onclick="navigate('next')">Next</button>
