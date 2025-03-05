@@ -15,8 +15,34 @@
     exercises to bring it to life.
   </p>
   <h2>Key Yield Points</h2>
-  <div class="navigation-buttons">
-    <button class="nav-button" onclick="navigate('prev')">Previous</button>
-    <button class="nav-button" onclick="navigate('next')">Next</button>
+  <h3>Function Calls</h3>
+  <p>
+    The Go compiler inserts scheduler checks at select function call boundaries,
+    such as non-inlined calls. When a goroutine calls a function, the runtime
+    might decide it's a good time to pause it and switch to another runnable
+    goroutine. Not every call yields—optimizations like inlining can skip
+    this—but it's a common point where cooperation happens.
+  </p>
+  <div class="code-section" style="margin: 1em 0 0 0">
+    <div
+      id="function-yield"
+      class="code-container"
+      data-code-path="cooperative-scheduling/function-yield.go"
+    ></div>
+    <div class="observation-section">
+      <div class="observation-header">
+        <i class="fa-solid fa-eye"></i>
+        <h4>Observation</h4>
+      </div>
+      <p>
+        "Main runs!" often prints first because
+        <span class="code-inline">sayHi()</span> gives the scheduler a chance to
+        switch.
+      </p>
+    </div>
+    <div class="navigation-buttons">
+      <button class="nav-button" onclick="navigate('prev')">Previous</button>
+      <button class="nav-button" onclick="navigate('next')">Next</button>
+    </div>
   </div>
 </div>
