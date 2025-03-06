@@ -50,6 +50,36 @@
     runtime detects this and schedules another runnable goroutine. This includes
     network calls or file I/O, which block on underlying system operations.
   </p>
+  <div class="code-section" style="margin: 1em 0 0 0">
+    <div
+      id="channel-yield"
+      class="code-container"
+      data-code-path="cooperative-scheduling/channel-yield.go"
+    ></div>
+  </div>
+  <div class="observation-section">
+    <div class="observation-header">
+      <i class="fa-solid fa-eye"></i>
+      <h4>Observation</h4>
+    </div>
+    <div class="characteristics">
+      <ul>
+        <li>
+          <span class="key-term">Cooperative Scheduling Point #1:</span> The
+          sender goroutine yields control to the scheduler because it’s blocked
+          on the channel send. This is cooperative because sender voluntarily
+          pauses, waiting for a receiver.
+        </li>
+        <li>
+          <span class="key-term">Cooperative Scheduling Point #2:</span> Before
+          the transfer completes, receiver was technically blocked at
+          <span class="code-inline"><-ch</span>, yielding to the scheduler until
+          sender was ready. Once both are at the channel operation, the
+          scheduler coordinates their rendezvous.
+        </li>
+      </ul>
+    </div>
+  </div>
   <h3>Explicit Yielding</h3>
   <p>
     You can manually tell a goroutine to yield by calling
