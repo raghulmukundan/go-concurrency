@@ -93,53 +93,60 @@
       class="code-container"
       data-code-path="cooperative-scheduling/explicit-yield.go"
     ></div>
-    <div class="observation-section">
-      <div class="observation-header">
-        <i class="fa-solid fa-eye"></i>
-        <h4>Observation</h4>
-      </div>
-      <p>Output might interleave (e.g., "Routine: 0", "Loop: 0") due to yielding.</p>
+  </div>
+  <div class="observation-section">
+    <div class="observation-header">
+      <i class="fa-solid fa-eye"></i>
+      <h4>Observation</h4>
     </div>
-    <h3>Garbage Collection</h3>
     <p>
-      During garbage collection (GC), the runtime may pause goroutines at
-      existing safe points—like function calls—to coordinate memory management.
-      This isn't a direct cooperative yield by the goroutine itself; it's a
-      runtime assist.
+      Output might interleave (e.g., "Routine: 0", "Loop: 0") due to yielding.
     </p>
+  </div>
+  <h3>Garbage Collection</h3>
+  <p>
+    During garbage collection (GC), the runtime may pause goroutines at existing
+    safe points—like function calls—to coordinate memory management. This isn't
+    a direct cooperative yield by the goroutine itself; it's a runtime assist.
+  </p>
+  <p>
+    Since Go 1.5, GC runs concurrently, and preemption (see below) helps, but GC
+    doesn't create new yield points beyond what's already there.
+  </p>
+  <div class="code-section" style="margin: 1em 0 0 0">
+    <div
+      id="explicit-yield"
+      class="code-container"
+      data-code-path="cooperative-scheduling/garbage-collection.go"
+    ></div>
+  </div>
+  <div class="observation-section">
+    <div class="observation-header">
+      <i class="fa-solid fa-eye"></i>
+      <h4>Observation</h4>
+    </div>
     <p>
-      Since Go 1.5, GC runs concurrently, and preemption (see below) helps, but
-      GC doesn't create new yield points beyond what's already there.
+      GC might pause allocate at a function call, but it's not guaranteed to
+      yield in a tight loop.
     </p>
-    <div class="observation-section">
-      <div class="observation-header">
-        <i class="fa-solid fa-eye"></i>
-        <h4>Observation</h4>
-      </div>
-      <p>
-        GC might pause allocate at a function call, but it's not guaranteed to
-        yield in a tight loop.
-      </p>
+  </div>
+  <h3>Preemption Exception</h3>
+  <p>
+    While cooperative scheduling relies on natural yield points, since Go 1.14,
+    asynchronous preemption can interrupt CPU-bound goroutines at safe points
+    (e.g., loop boundaries or function calls). This isn't pure cooperation—it's
+    the runtime stepping in to prevent long-running computations from starving
+    others. It ensures fairness without the overhead of full OS preemption.
+  </p>
+  <div class="observation-section">
+    <div class="observation-header">
+      <i class="fa-solid fa-eye"></i>
+      <h4>Observation</h4>
     </div>
-    <h3>Preemption Exception</h3>
-    <p>
-      While cooperative scheduling relies on natural yield points, since Go
-      1.14, asynchronous preemption can interrupt CPU-bound goroutines at safe
-      points (e.g., loop boundaries or function calls). This isn't pure
-      cooperation—it's the runtime stepping in to prevent long-running
-      computations from starving others. It ensures fairness without the
-      overhead of full OS preemption.
-    </p>
-    <div class="observation-section">
-      <div class="observation-header">
-        <i class="fa-solid fa-eye"></i>
-        <h4>Observation</h4>
-      </div>
-      <p>In Go 1.14+, "Main!" prints quickly because busy gets preempted.</p>
-    </div>
-    <div class="navigation-buttons">
-      <button class="nav-button" onclick="navigate('prev')">Previous</button>
-      <button class="nav-button" onclick="navigate('next')">Next</button>
-    </div>
+    <p>In Go 1.14+, "Main!" prints quickly because busy gets preempted.</p>
+  </div>
+  <div class="navigation-buttons">
+    <button class="nav-button" onclick="navigate('prev')">Previous</button>
+    <button class="nav-button" onclick="navigate('next')">Next</button>
   </div>
 </div>
