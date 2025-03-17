@@ -1,5 +1,118 @@
 <div class="section">
   <h1>Preemptive Scheduling in Go</h1>
+  <p>
+    Preemptive scheduling is a model where the runtime or operating system
+    forcibly interrupts a running thread or goroutine to give other tasks a
+    chance to execute. Unlike Go's default cooperative scheduling—where
+    goroutines voluntarily yield control—preemptive scheduling doesn't rely on
+    the task's willingness to pause.
+  </p>
+
+  <p>
+    Historically, Go leaned heavily on cooperative scheduling, but since Go
+    1.14, the runtime introduced limited preemption to handle edge cases like
+    CPU-bound goroutines that don't yield naturally. Let’s dive into how
+    preemptive scheduling works, explore its mechanics with examples, and
+    contrast it with cooperative scheduling through interactive exercises.
+  </p>
+
+  <h2>How Preemptive Scheduling Works</h2>
+  <p>
+    In preemptive scheduling, the Go runtime monitors goroutines and interrupts
+    them at "safe points" (e.g., loop boundaries or function calls) if they run
+    too long without yielding. This ensures fairness, preventing a single
+    goroutine from monopolizing the CPU.
+  </p>
+  <p>
+    The scheduler uses signals (like <span class="code-inline">SIGURG</span> on
+    Unix systems) to preempt goroutines, pausing them and switching to another
+    from the run queue. This contrasts with cooperative scheduling, where
+    goroutines must hit yield points like channel operations or
+    <span class="code-inline">runtime.Gosched().</span>
+  </p>
+  <p>
+    Preemption adds a small overhead—context switches are still faster than OS
+    threads (nanoseconds vs. microseconds)—but it's a trade-off for better
+    concurrency in CPU-intensive scenarios. Let's explore key aspects with code
+    examples and exercises.
+  </p>
+  <p>Key Aspects of Preemptive Scheduling</p>
+  <div class="characteristics">
+    <ul>
+      <li>
+        <span class="key-term">Forced Interruption at Safe Points</span>
+        <p>
+          The runtime can interrupt a goroutine during a long-running
+          computation, but only at designated safe points where the stack is in
+          a consistent state (e.g., after a function call or loop iteration).
+          This avoids the complexity of full OS-level preemption while ensuring
+          fairness.
+        </p>
+      </li>
+      <li>
+        <span class="key-term">Runtime-Driven Fairness</span>
+        <p>
+          Preemption ensures no single goroutine starves others, even without
+          explicit cooperation. The runtime tracks execution time and preempts
+          long-running goroutines, placing them back in the run queue.
+        </p>
+      </li>
+      <li>
+        <span class="key-term">Overhead of Preemption</span>
+        <p>
+          Preemption introduces slight overhead compared to cooperative
+          scheduling due to signal handling and stack checks.This overhead is
+          necessary for fairness. The runtime aims to keep this overhead low to
+          maintain Go's performance. However, it's still lightweight compared to
+          OS thread switches.
+        </p>
+      </li>
+      <li>
+        <span class="key-term">Contrast with Cooperative Scheduling</span>
+        <p>
+          Preemption shines where cooperation fails—tight loops with no I/O or
+          function calls. Cooperative scheduling relies on goroutines yielding
+          voluntarily, while preemption forces the issue.
+        </p>
+      </li>
+    </ul>
+  </div>
+  <div class="summary-section">
+    <div class="summary-header">
+      <div class="summary-icon">
+        <!-- If using lucide icons -->
+        <svg
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"
+          ></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+      </div>
+      <h2 class="summary-title">Summary</h2>
+    </div>
+
+    <div class="summary-content">
+      <p>
+        Preemptive scheduling in Go (since 1.14) complements cooperative
+        scheduling by forcibly interrupting CPU-bound goroutines at safe points,
+        ensuring fairness without heavy reliance on voluntary yields. It
+        introduces minimal overhead—still far lighter than OS thread
+        preemption—while enabling robust concurrency for diverse workloads. Key
+        moments include loop boundaries, function calls, and runtime-driven
+        interrupts via signals.
+      </p>
+    </div>
+  </div>
   <div class="navigation-buttons">
     <button class="nav-button" onclick="navigate('prev')">Previous</button>
     <button class="nav-button" onclick="navigate('next')">Next</button>
