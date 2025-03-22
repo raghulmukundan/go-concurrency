@@ -48,6 +48,28 @@
           This avoids the complexity of full OS-level preemption while ensuring
           fairness.
         </p>
+        <div class="code-section" style="margin: 1em 0 0 0">
+          <div
+            id="preemption"
+            class="code-container"
+            data-code-path="preemptive-scheduling/preemption-safe-points.go"
+          ></div>
+        </div>
+        <div class="observation-section">
+          <div class="observation-header">
+            <i class="fa-solid fa-eye"></i>
+            <h4>Observation</h4>
+          </div>
+          <p>
+            Before Go 1.14, <span class="code-inline">busyLoop</span> might
+            delay <span class="code-inline">polite</span> significantly because
+            it lacks yield points. With preemption (Go 1.14+), the runtime
+            interrupts <span class="code-inline">busyLoop</span> at safe points
+            (loop boundaries), allowing
+            <span class="code-inline">polite</span> to print its messages
+            sooner.
+          </p>
+        </div>
       </li>
       <li>
         <span class="key-term">Runtime-Driven Fairness</span>
