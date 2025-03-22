@@ -74,6 +74,37 @@
           function calls. Cooperative scheduling relies on goroutines yielding
           voluntarily, while preemption forces the issue.
         </p>
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>Aspect</th>
+              <th>Cooperative Scheduling</th>
+              <th>Preemptive Scheduling</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Control</td>
+              <td>Goroutine yields voluntarily</td>
+              <td>Runtime forces interruption</td>
+            </tr>
+            <tr>
+              <td>Yield Points</td>
+              <td>Function calls, I/O, Gosched</td>
+              <td>Safe points (loops, calls)</td>
+            </tr>
+            <tr>
+              <td>Overhead</td>
+              <td>Very low (hundreds of ns)</td>
+              <td>Slightly higher (still ns)</td>
+            </tr>
+            <tr>
+              <td>Best For</td>
+              <td>I/O-bound tasks</td>
+              <td>CPU-bound tasks</td>
+            </tr>
+          </tbody>
+        </table>
       </li>
     </ul>
   </div>

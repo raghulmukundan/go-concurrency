@@ -506,3 +506,69 @@
   line-height: 1.6;
   margin: 0;
 }
+/* Modern comparison table styling */
+.comparison-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 2rem 0;
+  background: #1a1f2c;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Table header */
+.comparison-table thead th {
+  background: #252935;
+  color: #ffffff;
+  padding: 1.25rem 1.5rem;
+  text-align: left;
+  font-weight: 600;
+  font-size: 1.1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* First header cell (Aspect) */
+.comparison-table thead th:first-child {
+  background: #1e2432;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Highlight header columns */
+.comparison-table thead th:not(:first-child) {
+  border-bottom: 2px solid rgba(0, 184, 212, 0.3);
+}
+
+/* Table rows */
+.comparison-table tbody tr:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Table cells */
+.comparison-table tbody td {
+  padding: 1.25rem 1.5rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Aspect column */
+.comparison-table tbody td:first-child {
+  color: #00b8d4;
+  font-weight: 500;
+  background: rgba(30, 36, 50, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .comparison-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .comparison-table tbody td,
+  .comparison-table thead th {
+    padding: 1rem;
+  }
+}
