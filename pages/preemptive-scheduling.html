@@ -67,7 +67,14 @@
             interrupts <span class="code-inline">busyLoop</span> at safe points
             (loop boundaries), allowing
             <span class="code-inline">polite</span> to print its messages
-            sooner.
+            sooner. However, if
+            <span class="code-inline">busyLoop</span> completes quickly—say, in
+            ~200ms—it can still finish before
+            <span class="code-inline">polite</span> resumes from its cooperative
+            <span class="code-inline">time.Sleep</span>
+            yields, as seen when "Busy loop done!" prints after "Polite: 0" but
+            before "Polite: 1". This shows preemption helps, but timing and
+            sleep durations can still let a fast CPU-bound task leap ahead.
           </p>
         </div>
       </li>
