@@ -1,10 +1,10 @@
 <div class="section">
   <h1>Goroutine Internals</h1>
 
-  <p>What Really Happens When We Type <span class="go-keyword">go</span> ?</p>
+  <p>What Really Happens When We Type <span class="code-inline">go</span> ?</p>
   <p>
     Remember our breakfast-making program? We simply added the
-    <span class="go-keyword">go</span> keyword and magic happened. But what's
+    <span class="code-inline">go</span> keyword and magic happened. But what's
     really going on under the hood? Let's peek behind the curtain!
   </p>
   <div class="code-section" style="margin: 1em 0 0 0">
@@ -23,13 +23,13 @@
     </div>
     <div class="thought-exercise-content">
       Before we dive deeper, what do you think happens first when Go sees the
-      <span class="go-keyword">go</span>
+      <span class="code-inline">go</span>
       keyword? Take a moment to write down your guess!
     </div>
   </div>
   <h2>The Birth of a Goroutine</h2>
   <p>
-    When you type <span class="go-keyword">go</span> before a function call, Go
+    When you type <span class="code-inline">go</span> before a function call, Go
     performs several steps:
   </p>
   <div class="characteristics">
@@ -192,7 +192,7 @@
     </div>
 
     <div class="summary-content">
-      <p>When you use the <span class="go-keyword">go</span> keyword:</p>
+      <p>When you use the <span class="code-inline">go</span> keyword:</p>
 
       <div class="key-point">
         A new goroutine structure is created with a tiny 2KB initial stack
