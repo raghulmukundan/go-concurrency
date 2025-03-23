@@ -86,34 +86,28 @@
           long-running goroutines, placing them back in the run queue.
         </p>
         <div class="code-section" style="margin: 1em 0 0 0">
-            <div
-              id="preemption"
-              class="code-container"
-              data-code-path="preemptive-scheduling/preemptive-fairness.go"
-            ></div>
+          <div
+            id="preemption"
+            class="code-container"
+            data-code-path="preemptive-scheduling/preemptive-fairness.go"
+          ></div>
+        </div>
+        <div class="observation-section">
+          <div class="observation-header">
+            <i class="fa-solid fa-eye"></i>
+            <h4>Observation</h4>
           </div>
-          <div class="observation-section">
-            <div class="observation-header">
-              <i class="fa-solid fa-eye"></i>
-              <h4>Observation</h4>
-            </div>
-            <p>
-              Before Go 1.14, <span class="code-inline">busyLoop</span> might
-              delay <span class="code-inline">polite</span> significantly because
-              it lacks yield points. With preemption (Go 1.14+), the runtime
-              interrupts <span class="code-inline">busyLoop</span> at safe points
-              (loop boundaries), allowing
-              <span class="code-inline">polite</span> to print its messages
-              sooner. However, if
-              <span class="code-inline">busyLoop</span> completes quickly—say, in
-              ~200ms—it can still finish before
-              <span class="code-inline">polite</span> resumes from its cooperative
-              <span class="code-inline">time.Sleep</span>
-              yields, as seen when "Busy loop done!" prints after "Polite: 0" but
-              before "Polite: 1". This shows preemption helps, but timing and
-              sleep durations can still let a fast CPU-bound task leap ahead.
-            </p>
-          </div>
+          <p>
+            When running CPU-bound
+            <span class="code-inline">cpuHog</span> goroutines alongside a
+            yielding <span class="code-inline">cooperative</span> goroutine in
+            Go 1.14+, expect the runtime to enforce fairness via preemption.
+            Sysmon interrupts long-running hogs at safe points after ~10ms,
+            allowing the cooperative goroutine to interleave its execution,
+            preventing starvation. Without preemption (pre-1.14), CPU hogs might
+            dominate, delaying cooperative tasks significantly.
+          </p>
+        </div>
       </li>
       <li>
         <span class="key-term">Overhead of Preemption</span>
